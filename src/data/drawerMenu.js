@@ -1,0 +1,125 @@
+/*
+  Side Drawer menu configuration.
+  Types: 'link' | 'expandable' | 'separator'
+  Icons are iconsax component names — resolved at render time.
+*/
+
+export const drawerMenu = [
+  {
+    id: 'home',
+    type: 'link',
+    label: 'Home',
+    labelAr: 'الرئيسية',
+    icon: 'Home2',
+    route: '/home',
+  },
+  {
+    id: 'mothers-day',
+    type: 'link',
+    label: "Mother's Day",
+    labelAr: 'يوم الأم',
+    icon: 'Lovely',
+    route: '/products/mothers-day',
+    badge: 'NEW',
+  },
+  {
+    id: 'new-arrival',
+    type: 'link',
+    label: 'New Arrival',
+    labelAr: 'وصل حديثاً',
+    icon: 'Star1',
+    route: '/products/new',
+  },
+  { id: 'sep-1', type: 'separator' },
+  {
+    id: 'perfumes',
+    type: 'expandable',
+    label: 'Perfumes',
+    labelAr: 'عطور',
+    icon: 'Airdrop',
+    categoryId: 1,
+    children: [
+      { id: 'perfumes-unisex', label: 'Unisex Perfumes', labelAr: 'عطور يونيسكس', route: '/products/1/perfumes-unisex' },
+      { id: 'perfumes-men', label: "Men's Perfumes", labelAr: 'عطور رجالية', route: '/products/1/perfumes-men' },
+      { id: 'perfumes-women', label: "Women's Perfumes", labelAr: 'عطور نسائية', route: '/products/1/perfumes-women' },
+    ],
+  },
+  {
+    id: 'flowers',
+    type: 'link',
+    label: 'Flowers & Bouquets',
+    labelAr: 'ورود وباقات',
+    icon: 'Lovely',
+    route: '/products/2',
+  },
+  {
+    id: 'watches',
+    type: 'expandable',
+    label: 'Watches',
+    labelAr: 'ساعات',
+    icon: 'Clock',
+    categoryId: 3,
+    children: [
+      { id: 'watches-men', label: "Men's Watches", labelAr: 'ساعات رجالية', route: '/products/3/watches-men' },
+      { id: 'watches-women', label: "Women's Watches", labelAr: 'ساعات نسائية', route: '/products/3/watches-women' },
+    ],
+  },
+  {
+    id: 'jewelry',
+    type: 'expandable',
+    label: 'Jewelry',
+    labelAr: 'مجوهرات',
+    icon: 'Crown1',
+    categoryId: 4,
+    children: [
+      { id: 'jewelry-accessories', label: 'Accessories', labelAr: 'إكسسوارات', route: '/products/4/jewelry-accessories' },
+      { id: 'jewelry-silver', label: 'Silver', labelAr: 'فضة', route: '/products/4/jewelry-silver' },
+      { id: 'jewelry-gemstones', label: 'Gemstones', labelAr: 'أحجار كريمة', route: '/products/4/jewelry-gemstones' },
+    ],
+  },
+  {
+    id: 'bags',
+    type: 'link',
+    label: 'Bags & Wallets',
+    labelAr: 'حقائب ومحافظ',
+    icon: 'Bag2',
+    route: '/products/5',
+  },
+  {
+    id: 'heritage',
+    type: 'expandable',
+    label: 'Heritage Items',
+    labelAr: 'تراثيات',
+    icon: 'Buildings',
+    categoryId: 6,
+    children: [
+      { id: 'heritage-shields', label: 'Shields', labelAr: 'دروع', route: '/products/6/heritage-shields' },
+      { id: 'heritage-handicraft', label: 'Handicraft', labelAr: 'حرف يدوية', route: '/products/6/heritage-handicraft' },
+    ],
+  },
+  {
+    id: 'kids',
+    type: 'link',
+    label: 'Kids & Toys',
+    labelAr: 'أطفال وألعاب',
+    icon: 'EmojiHappy',
+    route: '/products/7',
+  },
+  { id: 'sep-2', type: 'separator' },
+  {
+    id: 'shipping',
+    type: 'link',
+    label: 'Shipping Options',
+    labelAr: 'خيارات الشحن',
+    icon: 'TruckFast',
+    route: '/shipping',
+  },
+  {
+    id: 'payment',
+    type: 'link',
+    label: 'Payment Methods',
+    labelAr: 'طرق الدفع',
+    icon: 'Card',
+    route: '/payment-methods',
+  },
+];
