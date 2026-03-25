@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
@@ -42,7 +42,7 @@ import ViewProduct from './pages/vendor-portal/ViewProduct';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <LanguageProvider>
         <AuthProvider>
           <CartProvider>
@@ -95,6 +95,6 @@ export default function App() {
           </CartProvider>
         </AuthProvider>
       </LanguageProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
