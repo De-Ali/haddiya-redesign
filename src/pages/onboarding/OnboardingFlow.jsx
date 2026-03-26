@@ -1,129 +1,168 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gift, Shop, TruckFast, ArrowRight2, ArrowLeft2 } from 'iconsax-react';
+import { Gift, TruckFast, ArrowRotateLeft } from 'iconsax-react';
 import { useLanguage } from '../../context/LanguageContext';
-import Button from '../../components/ui/Button';
 
 const slides = [
   {
-    Icon: Gift,
-    gradient: 'linear-gradient(155deg, #7A1E2B 0%, #9E3040 50%, #5A1520 100%)',
-    accent: 'rgba(212,175,55,0.10)',
+    image: 'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?w=800&h=1200&fit=crop',
+    title: 'Find the Perfect Gift',
+    titleAr: 'اعثر على الهدية المثالية',
+    subtitle: 'For every occasion, every person, every moment.',
+    subtitleAr: 'لكل مناسبة، لكل شخص، لكل لحظة.',
   },
   {
-    Icon: Shop,
-    gradient: 'linear-gradient(155deg, #2E4057 0%, #3D5A80 50%, #1A2A3F 100%)',
-    accent: 'rgba(100,180,255,0.08)',
+    image: 'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=800&h=1200&fit=crop',
+    title: 'Unique Omani Gifts',
+    titleAr: 'هدايا عمانية فريدة',
+    subtitle: 'Curated collection of luxury gifts from the finest brands.',
+    subtitleAr: 'مجموعة مختارة من الهدايا الفاخرة من أرقى العلامات.',
   },
   {
-    Icon: TruckFast,
-    gradient: 'linear-gradient(155deg, #5A3E1B 0%, #7A5A2B 50%, #3A2810 100%)',
-    accent: 'rgba(212,175,55,0.10)',
+    image: 'https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=800&h=1200&fit=crop',
+    title: 'Beautiful Packaging.\nFast Delivery.',
+    titleAr: 'تغليف أنيق.\nتوصيل سريع.',
+    subtitle: 'Gift-wrapped and delivered across Oman.',
+    subtitleAr: 'مغلفة بعناية وتُوصل في جميع أنحاء عمان.',
+    features: [
+      { Icon: Gift, label: 'Gift Wrap', labelAr: 'تغليف' },
+      { Icon: TruckFast, label: 'Same Day', labelAr: 'نفس اليوم' },
+      { Icon: ArrowRotateLeft, label: 'Returns', labelAr: 'إرجاع' },
+    ],
   },
 ];
 
 export default function OnboardingFlow() {
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
-  const { t, isRTL } = useLanguage();
+  const { lang } = useLanguage();
+  const isAr = lang === 'ar';
 
-  const slideKeys = ['slide1', 'slide2', 'slide3'];
   const slide = slides[step];
-  const slideKey = slideKeys[step];
 
   const handleNext = () => {
-    if (step === 2) navigate('/home');
+    if (step === 2) navigate('/login');
     else setStep(s => s + 1);
   };
 
   return (
-    <div className="flex-1 relative overflow-hidden flex flex-col" style={{ background: slide.gradient }}>
-      {/* Ambient orbs */}
-      <div className="absolute top-16 -start-20 w-64 h-64 rounded-full blur-[100px]" style={{ background: slide.accent }} />
-      <div className="absolute bottom-40 -end-16 w-52 h-52 rounded-full blur-[80px]" style={{ background: 'rgba(255,255,255,0.03)' }} />
+    <div className="flex-1 relative overflow-hidden flex flex-col" style={{ background: '#000' }}>
+      {/* Background image */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={step}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6 }}
+          className="absolute inset-0"
+        >
+          <img
+            src={slide.image}
+            alt=""
+            className="w-full h-full object-cover"
+          />
+          {/* Dark overlay gradient from bottom */}
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 40%, transparent 60%)' }} />
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Content */}
-      <div className="relative z-10 flex-1 flex flex-col px-7 pb-10">
-        {/* Skip */}
-        <div className="flex justify-end pt-14">
-          <button
-            onClick={() => navigate('/home')}
-            className="text-white/50 text-[13px] font-medium px-3 py-1.5 rounded-xl active:bg-white/5 transition-colors"
+      {/* Skip button */}
+      <div className="relative z-10 flex justify-end px-6 pt-14">
+        <button
+          onClick={() => navigate('/login')}
+          className="text-white/70 text-[14px] font-medium px-3 py-1.5 rounded-xl active:bg-white/10 transition-colors"
+        >
+          {isAr ? 'تخطي' : 'Skip'}
+        </button>
+      </div>
+
+      {/* Spacer */}
+      <div className="flex-1" />
+
+      {/* Bottom content panel */}
+      <div className="relative z-10 px-6 pb-10">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
           >
-            {t.onboarding.skip}
-          </button>
-        </div>
-
-        {/* Icon + Text */}
-        <div className="flex-1 flex flex-col items-center justify-center -mt-8">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={step}
-              initial={{ opacity: 0, y: 28, scale: 0.92 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -28, scale: 0.92 }}
-              transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="flex flex-col items-center"
+            {/* Glass panel */}
+            <div
+              className="rounded-[24px] px-6 pt-7 pb-6"
+              style={{
+                background: 'rgba(255,255,255,0.12)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255,255,255,0.15)',
+              }}
             >
-              {/* Icon container */}
-              <div
-                className="w-[100px] h-[100px] rounded-[28px] flex items-center justify-center mb-10"
-                style={{
-                  background: 'rgba(255,255,255,0.08)',
-                  backdropFilter: 'blur(24px)',
-                  border: '1.5px solid rgba(255,255,255,0.12)',
-                  boxShadow: '0 16px 48px rgba(0,0,0,0.20), inset 0 1px 0 rgba(255,255,255,0.08)',
-                }}
+              {/* Title */}
+              <h2
+                className="text-center leading-tight mb-2"
+                style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '28px', fontWeight: 700, color: '#FFFFFF', whiteSpace: 'pre-line' }}
               >
-                <slide.Icon size={42} variant="Bold" color="#D4AF37" />
+                {isAr ? slide.titleAr : slide.title}
+              </h2>
+
+              {/* Subtitle */}
+              <p className="text-center text-[13px] leading-relaxed mb-5" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                {isAr ? slide.subtitleAr : slide.subtitle}
+              </p>
+
+              {/* Features (last slide only) */}
+              {slide.features && (
+                <div className="flex justify-center gap-8 mb-5">
+                  {slide.features.map((f, i) => (
+                    <div key={i} className="flex flex-col items-center gap-2">
+                      <div
+                        className="w-[48px] h-[48px] rounded-full flex items-center justify-center"
+                        style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)' }}
+                      >
+                        <f.Icon size={20} variant="Outline" color="#FFFFFF" />
+                      </div>
+                      <span className="text-[11px] font-medium" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                        {isAr ? f.labelAr : f.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Dots */}
+              <div className="flex justify-center gap-2 mb-5">
+                {slides.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setStep(i)}
+                    className="rounded-full transition-all duration-300"
+                    style={{
+                      width: i === step ? 24 : 8,
+                      height: 8,
+                      background: i === step ? '#D4AF37' : 'rgba(255,255,255,0.3)',
+                    }}
+                  />
+                ))}
               </div>
 
-              <h2 className="font-display text-[30px] font-semibold text-white text-center leading-tight mb-4 tracking-tight">
-                {t.onboarding[`${slideKey}Title`]}
-              </h2>
-              <p className="text-white/50 text-center text-[14px] leading-relaxed max-w-[260px]">
-                {t.onboarding[`${slideKey}Desc`]}
-              </p>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Dots + CTA */}
-        <div className="flex flex-col items-center gap-8">
-          {/* Step dots */}
-          <div className="flex gap-2">
-            {[0, 1, 2].map(i => (
-              <motion.div
-                key={i}
-                animate={{ width: i === step ? 28 : 8 }}
-                transition={{ duration: 0.3, ease: 'easeOut' }}
-                className="h-[6px] rounded-full"
-                style={{
-                  background: i === step ? '#D4AF37' : 'rgba(255,255,255,0.20)',
-                }}
-              />
-            ))}
-          </div>
-
-          {/* CTA Button */}
-          <button
-            onClick={handleNext}
-            className="w-full py-4 rounded-2xl text-[15px] font-bold flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
-            style={{
-              background: '#D4AF37',
-              color: '#fff',
-              boxShadow: '0 8px 24px rgba(212,175,55,0.25)',
-            }}
-          >
-            {step === 2 ? t.onboarding.getStarted : t.onboarding.next}
-            {step < 2 && (
-              isRTL
-                ? <ArrowLeft2 size={18} variant="Outline" />
-                : <ArrowRight2 size={18} variant="Outline" />
-            )}
-          </button>
-        </div>
+              {/* CTA button */}
+              <button
+                onClick={handleNext}
+                className="w-full py-4 rounded-full text-[15px] font-bold active:scale-[0.98] transition-transform"
+                style={{ background: '#7A1E2B', color: '#FFFFFF', boxShadow: '0 6px 20px rgba(122,30,43,0.35)' }}
+              >
+                {step === 2
+                  ? (isAr ? 'ابدأ التسوق' : 'Start Shopping')
+                  : (isAr ? 'التالي' : 'Next')
+                }
+              </button>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );
