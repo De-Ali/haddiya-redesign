@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Gift, Box1, ArrowRight2 } from 'iconsax-react';
+import { Box1, ArrowRight2 } from 'iconsax-react';
 import { useLanguage } from '../../context/LanguageContext';
 import Button from '../../components/ui/Button';
 
@@ -17,15 +17,7 @@ export default function OrderSuccess() {
         transition={{ type: 'spring', stiffness: 180, damping: 15, delay: 0.2 }}
         className="relative mb-9"
       >
-        <div
-          className="w-28 h-28 rounded-3xl flex items-center justify-center"
-          style={{
-            background: 'linear-gradient(135deg, #7A1E2B, #9E3040)',
-            boxShadow: '0 16px 48px rgba(122,30,43,0.30)',
-          }}
-        >
-          <Gift size={48} variant="Bold" color="#D4AF37" />
-        </div>
+        <img src="/haddiya-logo.png" alt="Haddiya" className="w-28 h-28 object-contain" />
 
         {/* Check badge */}
         <motion.div

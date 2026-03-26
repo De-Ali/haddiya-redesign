@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  Gift, SearchNormal1, Notification, Global, ArrowRight2, ArrowLeft2,
+  SearchNormal1, Notification, Global, ArrowRight2, ArrowLeft2,
   Setting4, Man, Woman, People, Lovely, HambergerMenu,
 } from 'iconsax-react';
 import { useLanguage } from '../../context/LanguageContext';
@@ -131,9 +131,7 @@ export default function HomePage() {
             <HambergerMenu size={20} variant="Outline" color="#1C1C1E" />
           </button>
           {/* Logo */}
-          <div className="w-[42px] h-[42px] rounded-xl flex items-center justify-center shadow-maroon bg-gradient-maroon">
-            <Gift size={18} variant="Bold" color="#D4AF37" />
-          </div>
+          <img src="/haddiya-logo.png" alt="Haddiya" className="w-[42px] h-[42px] object-contain" />
           <div>
             <h1 className="font-display text-[20px] font-semibold text-dark tracking-tight leading-none">Haddiya</h1>
             <p className="text-[8px] text-accent font-bold tracking-[0.22em] uppercase mt-[2px]">
