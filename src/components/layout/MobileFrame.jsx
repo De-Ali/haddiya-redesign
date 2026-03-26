@@ -34,10 +34,10 @@ export default function MobileFrame({ children }) {
 
   return (
     <div
-      className="flex flex-col mx-auto w-full"
+      className="flex flex-col mx-auto w-full relative"
       style={{
         maxWidth: '430px',
-        minHeight: '100vh',
+        minHeight: '100dvh',
         background: 'var(--color-bg)',
       }}
     >
@@ -55,7 +55,12 @@ export default function MobileFrame({ children }) {
               <AppBar />
             </div>
           )}
-          <div className="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar">
+
+          {/* Scrollable content — fills space between appbar and bottom nav */}
+          <div
+            className="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar"
+            style={{ paddingBottom: showNav ? '72px' : '0' }}
+          >
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={pathname}
@@ -69,7 +74,13 @@ export default function MobileFrame({ children }) {
               </motion.div>
             </AnimatePresence>
           </div>
-          {showNav && <BottomNav />}
+
+          {/* Sticky bottom nav — always at the bottom */}
+          {showNav && (
+            <div className="sticky bottom-0 z-50 w-full">
+              <BottomNav />
+            </div>
+          )}
         </>
       )}
     </div>
