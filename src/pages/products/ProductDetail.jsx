@@ -30,7 +30,7 @@ export default function ProductDetail() {
   const BackIcon = isRTL ? ArrowRight2 : ArrowLeft2;
 
   return (
-    <div className="bg-bg min-h-full -mt-14">
+    <div className="bg-bg min-h-full">
       {/* ── Image Gallery ── */}
       <div className="relative aspect-square bg-bg-warm overflow-hidden">
         <motion.img
@@ -45,7 +45,7 @@ export default function ProductDetail() {
         <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent" />
 
         {/* Top actions */}
-        <div className="absolute top-14 left-0 right-0 px-5 flex items-center justify-between z-10">
+        <div className="absolute top-4 left-0 right-0 px-5 flex items-center justify-between z-10" style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
           <button
             onClick={() => navigate(-1)}
             className="w-10 h-10 rounded-full bg-white flex items-center justify-center active:scale-90 transition-transform"

@@ -17,7 +17,7 @@ export default function OrderSuccess() {
         transition={{ type: 'spring', stiffness: 180, damping: 15, delay: 0.2 }}
         className="relative mb-9"
       >
-        <img src="/haddiya-logo.png" alt="Haddiya" className="w-28 h-28 object-contain" />
+        <img src={`${import.meta.env.BASE_URL}haddiya-logo.png`} alt="Haddiya" className="w-28 h-28 object-contain" />
 
         {/* Check badge */}
         <motion.div

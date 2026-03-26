@@ -71,7 +71,7 @@ export default function SideDrawer() {
             {/* ── Header ── */}
             <div className="flex items-center justify-between px-5 pt-6 pb-4 shrink-0">
               <div className="flex items-center gap-3">
-                <img src="/haddiya-logo.png" alt="Haddiya" className="w-10 h-10 object-contain" />
+                <img src={`${import.meta.env.BASE_URL}haddiya-logo.png`} alt="Haddiya" className="w-10 h-10 object-contain" />
                 <div>
                   <h2 className="font-display text-[18px] font-semibold tracking-tight leading-none" style={{ color: '#1C1C1E' }}>
                     Haddiya

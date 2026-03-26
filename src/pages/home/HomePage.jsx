@@ -131,7 +131,7 @@ export default function HomePage() {
             <HambergerMenu size={20} variant="Outline" color="#1C1C1E" />
           </button>
           {/* Logo */}
-          <img src="/haddiya-logo.png" alt="Haddiya" className="w-[42px] h-[42px] object-contain" />
+          <img src={`${import.meta.env.BASE_URL}haddiya-logo.png`} alt="Haddiya" className="w-[42px] h-[42px] object-contain" />
           <div>
             <h1 className="font-display text-[20px] font-semibold text-dark tracking-tight leading-none">Haddiya</h1>
             <p className="text-[8px] text-accent font-bold tracking-[0.22em] uppercase mt-[2px]">
