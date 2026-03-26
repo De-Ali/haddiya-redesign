@@ -6,21 +6,21 @@ import { useLanguage } from '../../context/LanguageContext';
 
 const slides = [
   {
-    image: 'https://images.unsplash.com/photo-1545243424-0ce743321e11?w=800&h=1200&fit=crop&q=80',
+    image: '/onboarding-1.jpg',
     title: 'Find the Perfect Gift',
     titleAr: 'اعثر على الهدية المثالية',
     subtitle: 'For every occasion, every person, every moment.',
     subtitleAr: 'لكل مناسبة، لكل شخص، لكل لحظة.',
   },
   {
-    image: 'https://images.unsplash.com/photo-1633163947545-85beac03dc21?w=800&h=1200&fit=crop&q=80',
+    image: '/onboarding-2.jpg',
     title: 'Unique Omani Gifts',
     titleAr: 'هدايا عمانية فريدة',
     subtitle: 'Curated collection of luxury gifts from the finest brands.',
     subtitleAr: 'مجموعة مختارة من الهدايا الفاخرة من أرقى العلامات.',
   },
   {
-    image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=1200&fit=crop&q=80',
+    image: '/onboarding-3.jpg',
     title: 'Beautiful Packaging.\nFast Delivery.',
     titleAr: 'تغليف أنيق.\nتوصيل سريع.',
     subtitle: 'Gift-wrapped and delivered across Oman.',
