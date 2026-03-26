@@ -9,6 +9,7 @@ export default function OtpPage() {
   const { t, lang } = useLanguage();
   const [otp, setOtp] = useState(['', '', '', '']);
   const refs = [useRef(), useRef(), useRef(), useRef()];
+  const isAr = lang === 'ar';
 
   const handleChange = (index, value) => {
     if (value.length > 1) return;
@@ -27,41 +28,45 @@ export default function OtpPage() {
   const isFilled = otp.every(d => d);
 
   return (
-    <div
-      className="flex-1 relative overflow-hidden flex flex-col items-center justify-center px-7"
-      style={{ background: 'linear-gradient(155deg, #8A2232 0%, #6A1825 30%, #4A1018 60%, #2A0A10 100%)' }}
-    >
-      {/* Ambient orbs */}
-      <div className="absolute top-24 -end-20 w-56 h-56 rounded-full blur-[100px]" style={{ background: 'rgba(212,175,55,0.08)' }} />
-
+    <div className="flex-1 flex flex-col overflow-y-auto" style={{ background: '#F5F0EB' }}>
+      {/* ── Top logo section ── */}
       <motion.div
-        initial={{ scale: 0.85, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="text-center w-full relative z-10"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col items-center pt-12 pb-6"
       >
-        {/* Icon */}
+        <img src="/haddiya-logo.png" alt="Haddiya" className="w-[80px] h-[80px] object-contain" />
+        <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '24px', fontWeight: 600, color: '#7A1E2B', marginTop: '8px' }}>
+          Haddiya
+        </h1>
+      </motion.div>
+
+      {/* ── White card ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15, duration: 0.5 }}
+        className="flex-1 px-6 pt-8 pb-10 text-center"
+        style={{ background: '#FFFFFF', borderRadius: '28px 28px 0 0', boxShadow: '0 -4px 20px rgba(0,0,0,0.04)' }}
+      >
+        {/* Shield icon */}
         <div
-          className="w-20 h-20 rounded-3xl mx-auto flex items-center justify-center mb-7"
-          style={{
-            background: 'rgba(255,255,255,0.08)',
-            backdropFilter: 'blur(24px)',
-            border: '1.5px solid rgba(255,255,255,0.12)',
-            boxShadow: '0 12px 40px rgba(0,0,0,0.20)',
-          }}
+          className="w-[72px] h-[72px] rounded-2xl mx-auto flex items-center justify-center mb-6"
+          style={{ background: 'rgba(122,30,43,0.06)' }}
         >
-          <ShieldTick size={36} variant="Bold" color="#D4AF37" />
+          <ShieldTick size={36} variant="Bold" color="#7A1E2B" />
         </div>
 
-        <h1 className="font-display text-[28px] font-semibold text-white mb-2 tracking-tight">
-          {t.auth.otp}
-        </h1>
-        <p className="text-white/40 text-[13px] mb-10 max-w-[240px] mx-auto leading-relaxed">
-          {t.auth.otpSent}
+        <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '26px', fontWeight: 700, color: '#7A1E2B', marginBottom: '6px' }}>
+          {isAr ? 'أدخل رمز التحقق' : 'Enter Verification Code'}
+        </h2>
+        <p className="text-[13px] mb-8 max-w-[260px] mx-auto leading-relaxed" style={{ color: '#8A7A70' }}>
+          {isAr ? 'أرسلنا رمزاً إلى هاتفك' : 'We sent a code to your phone'}
         </p>
 
         {/* OTP inputs */}
-        <div className="flex gap-3.5 justify-center mb-10">
+        <div className="flex gap-3.5 justify-center mb-8">
           {otp.map((digit, i) => (
             <motion.input
               key={i}
@@ -75,11 +80,12 @@ export default function OtpPage() {
               value={digit}
               onChange={e => handleChange(i, e.target.value)}
               onKeyDown={e => handleKeyDown(i, e)}
-              className="w-[60px] h-[60px] rounded-2xl text-center text-[22px] font-bold text-white outline-none transition-all"
+              className="w-[60px] h-[60px] rounded-2xl text-center text-[22px] font-bold outline-none transition-all"
               style={{
-                background: digit ? 'rgba(212,175,55,0.18)' : 'rgba(255,255,255,0.12)',
-                border: digit ? '2px solid rgba(212,175,55,0.50)' : '1.5px solid rgba(255,255,255,0.22)',
-                boxShadow: digit ? '0 0 0 4px rgba(212,175,55,0.08)' : 'none',
+                background: digit ? 'rgba(122,30,43,0.04)' : '#F5F0EB',
+                border: digit ? '2px solid #7A1E2B' : '1.5px solid #EDE8E1',
+                color: '#1A1A1A',
+                boxShadow: digit ? '0 0 0 4px rgba(122,30,43,0.06)' : 'none',
               }}
             />
           ))}
@@ -88,22 +94,22 @@ export default function OtpPage() {
         {/* Verify button */}
         <button
           onClick={() => navigate('/home')}
-          className="w-full py-4 rounded-2xl text-[15px] font-bold active:scale-[0.98] transition-all"
+          className="w-full py-4 rounded-full text-[15px] font-bold active:scale-[0.98] transition-all mb-6"
           style={{
-            background: isFilled ? '#D4AF37' : 'rgba(212,175,55,0.25)',
-            color: '#fff',
-            boxShadow: isFilled ? '0 8px 24px rgba(212,175,55,0.25)' : 'none',
+            background: isFilled ? '#D4AF37' : '#EDE8E1',
+            color: isFilled ? '#1A1A1A' : '#8A7A70',
+            boxShadow: isFilled ? '0 4px 16px rgba(212,175,55,0.3)' : 'none',
             opacity: isFilled ? 1 : 0.7,
           }}
         >
-          {t.auth.verify}
+          {isAr ? 'تحقق' : 'Verify'}
         </button>
 
         {/* Resend */}
-        <p className="text-white/35 text-[12px] mt-7">
-          {lang === 'ar' ? 'لم تستلم الرمز؟' : "Didn't receive the code?"}{' '}
-          <button className="font-semibold" style={{ color: 'rgba(212,175,55,0.85)' }}>
-            {lang === 'ar' ? 'إعادة إرسال' : 'Resend'}
+        <p className="text-[13px]" style={{ color: '#8A7A70' }}>
+          {isAr ? 'لم تستلم الرمز؟ ' : "Didn't receive the code? "}
+          <button className="font-bold" style={{ color: '#7A1E2B' }}>
+            {isAr ? 'إعادة إرسال' : 'Resend'}
           </button>
         </p>
       </motion.div>

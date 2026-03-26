@@ -23,7 +23,7 @@ export default function LoginPage() {
         transition={{ duration: 0.5 }}
         className="flex flex-col items-center pt-12 pb-6"
       >
-        <img src="/haddiya-logo.svg" alt="Haddiya" className="w-[80px] h-[80px] object-contain" />
+        <img src="/haddiya-logo.png" alt="Haddiya" className="w-[80px] h-[80px] object-contain" />
         <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '24px', fontWeight: 600, color: '#7A1E2B', marginTop: '8px' }}>
           Haddiya
         </h1>

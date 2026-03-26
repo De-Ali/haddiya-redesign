@@ -6,21 +6,21 @@ import { useLanguage } from '../../context/LanguageContext';
 
 const slides = [
   {
-    image: 'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?w=800&h=1200&fit=crop',
+    image: 'https://images.unsplash.com/photo-1545243424-0ce743321e11?w=800&h=1200&fit=crop&q=80',
     title: 'Find the Perfect Gift',
     titleAr: 'اعثر على الهدية المثالية',
     subtitle: 'For every occasion, every person, every moment.',
     subtitleAr: 'لكل مناسبة، لكل شخص، لكل لحظة.',
   },
   {
-    image: 'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=800&h=1200&fit=crop',
+    image: 'https://images.unsplash.com/photo-1633163947545-85beac03dc21?w=800&h=1200&fit=crop&q=80',
     title: 'Unique Omani Gifts',
     titleAr: 'هدايا عمانية فريدة',
     subtitle: 'Curated collection of luxury gifts from the finest brands.',
     subtitleAr: 'مجموعة مختارة من الهدايا الفاخرة من أرقى العلامات.',
   },
   {
-    image: 'https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=800&h=1200&fit=crop',
+    image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=1200&fit=crop&q=80',
     title: 'Beautiful Packaging.\nFast Delivery.',
     titleAr: 'تغليف أنيق.\nتوصيل سريع.',
     subtitle: 'Gift-wrapped and delivered across Oman.',
@@ -81,8 +81,8 @@ export default function OnboardingFlow() {
       {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Bottom content panel */}
-      <div className="relative z-10 px-6 pb-10">
+      {/* Bottom content panel — full width */}
+      <div className="relative z-10 px-4 pb-8">
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
@@ -93,7 +93,7 @@ export default function OnboardingFlow() {
           >
             {/* Glass panel */}
             <div
-              className="rounded-[24px] px-6 pt-7 pb-6"
+              className="w-full rounded-[24px] px-5 pt-7 pb-6"
               style={{
                 background: 'rgba(255,255,255,0.12)',
                 backdropFilter: 'blur(20px)',

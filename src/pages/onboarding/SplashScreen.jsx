@@ -19,7 +19,7 @@ export default function SplashScreen() {
         transition={{ duration: 0.8, type: 'spring', stiffness: 100, damping: 15 }}
         className="flex flex-col items-center"
       >
-        <img src="/haddiya-logo.svg" alt="Haddiya" className="w-[180px] h-[180px] object-contain" />
+        <img src="/haddiya-logo.png" alt="Haddiya" className="w-[180px] h-[180px] object-contain" />
       </motion.div>
 
       {/* Brand name */}
