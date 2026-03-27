@@ -5,14 +5,14 @@ import AppBar from './AppBar';
 
 const noNavRoutes = [
   '/', '/splash', '/onboarding',
-  '/login', '/signup', '/otp', '/forgot-password',
+  '/login', '/login-phone', '/signup', '/otp', '/forgot-password',
   '/checkout', '/order-success',
 ];
 
 const noAppBarRoutes = [
   '/', '/splash', '/onboarding',
   '/home',
-  '/login', '/signup', '/otp', '/forgot-password',
+  '/login', '/login-phone', '/signup', '/otp', '/forgot-password',
 ];
 
 /* Routes that have their own custom header inside the page */
@@ -20,7 +20,7 @@ const customHeaderRoutes = ['/product/', '/vendor/', '/vendor-portal/product/'];
 
 const fullScreenRoutes = [
   '/', '/splash', '/onboarding',
-  '/login', '/signup', '/otp', '/forgot-password',
+  '/login', '/login-phone', '/signup', '/otp', '/forgot-password',
 ];
 
 /* ─── MobileFrame ────────────────────────────────────────────────────────── */

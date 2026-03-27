@@ -14,7 +14,7 @@ export default function SignupPage() {
   const [agreed, setAgreed] = useState(false);
   const isAr = lang === 'ar';
 
-  const handleSignup = () => { login(); navigate('/otp'); };
+  const handleSignup = () => { navigate('/login'); };
 
   return (
     <div className="flex-1 flex flex-col overflow-y-auto" style={{ background: '#F5F0EB' }}>

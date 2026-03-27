@@ -22,6 +22,7 @@ import SendAsGift from './pages/cart/SendAsGift';
 import CheckoutPage from './pages/checkout/CheckoutPage';
 import OrderSuccess from './pages/checkout/OrderSuccess';
 import LoginPage from './pages/auth/LoginPage';
+import PhoneLoginPage from './pages/auth/PhoneLoginPage';
 import SignupPage from './pages/auth/SignupPage';
 import OtpPage from './pages/auth/OtpPage';
 import ForgotPassword from './pages/auth/ForgotPassword';
@@ -69,6 +70,7 @@ export default function App() {
                   <Route path="/checkout" element={<CheckoutPage />} />
                   <Route path="/order-success" element={<OrderSuccess />} />
                   <Route path="/login" element={<LoginPage />} />
+                  <Route path="/login-phone" element={<PhoneLoginPage />} />
                   <Route path="/signup" element={<SignupPage />} />
                   <Route path="/otp" element={<OtpPage />} />
                   <Route path="/forgot-password" element={<ForgotPassword />} />

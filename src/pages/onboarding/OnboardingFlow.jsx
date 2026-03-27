@@ -42,7 +42,7 @@ export default function OnboardingFlow() {
   const slide = slides[step];
 
   const handleNext = () => {
-    if (step === 2) navigate('/login');
+    if (step === 2) navigate('/signup');
     else setStep(s => s + 1);
   };
 
@@ -71,7 +71,7 @@ export default function OnboardingFlow() {
       {/* Skip button */}
       <div className="relative z-10 flex justify-end px-6 pt-14">
         <button
-          onClick={() => navigate('/login')}
+          onClick={() => navigate('/signup')}
           className="text-white/70 text-[14px] font-medium px-3 py-1.5 rounded-xl active:bg-white/10 transition-colors"
         >
           {isAr ? 'تخطي' : 'Skip'}

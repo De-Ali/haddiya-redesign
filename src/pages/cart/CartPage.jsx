@@ -62,7 +62,7 @@ export default function CartPage() {
               className="w-[100px] h-[100px] object-contain mb-6"
             />
             <button
-              onClick={() => navigate('/login')}
+              onClick={() => navigate('/login-phone', { state: { returnTo: '/cart' } })}
               className="w-full max-w-[280px] h-[52px] rounded-2xl text-[15px] font-bold active:scale-[0.98] transition-transform"
               style={{ background: '#7A1E2B', color: '#FFFFFF', boxShadow: '0 4px 16px rgba(122,30,43,0.25)' }}
             >

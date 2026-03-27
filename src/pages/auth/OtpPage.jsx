@@ -49,10 +49,12 @@ export default function OtpPage() {
 
   const isFilled = otp.every(d => d);
 
+  const returnTo = location.state?.returnTo || '/home';
+
   const handleConfirm = () => {
     if (isFilled) {
       login();
-      navigate('/home');
+      navigate(returnTo);
     }
   };
 
