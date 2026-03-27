@@ -121,13 +121,26 @@ export default function HomePage() {
     <div className="bg-mesh min-h-full pb-6">
 
       {/* ══ Header (sticky) ════════════════════════════════════════════════ */}
-      <div className="px-5 pt-4 pb-3 flex items-center justify-between sticky top-0 z-30" style={{ background: 'var(--color-bg)' }}>
+      <div
+        className="px-5 py-3 flex items-center justify-between sticky top-0 z-30 w-full"
+        style={{
+          background: 'linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.60) 100%)',
+          backdropFilter: 'blur(40px) saturate(2.0)',
+          WebkitBackdropFilter: 'blur(40px) saturate(2.0)',
+          boxShadow: '0 1px 0 rgba(212,175,55,0.08), 0 4px 20px rgba(0,0,0,0.03)',
+          borderBottom: '0.5px solid rgba(212,175,55,0.10)',
+        }}
+      >
         <div className="flex items-center gap-2.5">
           {/* Hamburger menu */}
           <button
             onClick={openDrawer}
-            className="w-10 h-10 rounded-full bg-white border flex items-center justify-center active:scale-90 transition-transform shadow-soft"
-            style={{ borderColor: 'rgba(0,0,0,0.06)' }}
+            className="w-[38px] h-[38px] rounded-[13px] flex items-center justify-center active:scale-90 transition-all"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.4))',
+              border: '0.5px solid rgba(255,255,255,0.6)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.8)',
+            }}
           >
             <HambergerMenu size={20} variant="Outline" color="#1C1C1E" />
           </button>
@@ -143,20 +156,28 @@ export default function HomePage() {
         <div className="flex items-center gap-2">
           <button
             onClick={toggleLanguage}
-            className="w-10 h-10 rounded-full bg-white border flex items-center justify-center active:scale-90 transition-transform shadow-soft"
-            style={{ borderColor: 'rgba(0,0,0,0.06)' }}
+            className="w-[38px] h-[38px] rounded-[13px] flex items-center justify-center active:scale-90 transition-all"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.4))',
+              border: '0.5px solid rgba(255,255,255,0.6)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.8)',
+            }}
           >
             <Global size={18} variant="Outline" color="#6B7280" />
           </button>
           <button
             onClick={() => navigate('/notifications')}
-            className="w-10 h-10 rounded-full bg-white border flex items-center justify-center relative active:scale-90 transition-transform shadow-soft"
-            style={{ borderColor: 'rgba(0,0,0,0.06)' }}
+            className="w-[38px] h-[38px] rounded-[13px] flex items-center justify-center relative active:scale-90 transition-all"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.4))',
+              border: '0.5px solid rgba(255,255,255,0.6)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.8)',
+            }}
           >
             <Notification size={18} variant="Outline" color="#6B7280" />
             <span
-              className="absolute top-1 end-1 w-[9px] h-[9px] bg-accent rounded-full"
-              style={{ border: '2px solid white' }}
+              className="absolute top-[5px] end-[5px] w-[8px] h-[8px] rounded-full"
+              style={{ background: 'linear-gradient(135deg, #D4AF37, #C9A02C)', boxShadow: '0 0 0 2px rgba(255,255,255,0.9)' }}
             />
           </button>
         </div>

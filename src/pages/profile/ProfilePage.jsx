@@ -13,7 +13,7 @@ import { useAuth } from '../../context/AuthContext';
 export default function ProfilePage() {
   const navigate = useNavigate();
   const { t, lang, isRTL, toggleLanguage } = useLanguage();
-  const { user, isLoggedIn, logout } = useAuth();
+  const { user, isLoggedIn, isVendor, logout } = useAuth();
   const Arrow = isRTL ? ArrowLeft2 : ArrowRight2;
   const isAr = lang === 'ar';
 
@@ -22,6 +22,11 @@ export default function ProfilePage() {
     { Icon: Box1, label: isAr ? 'الطلبات' : 'Orders', path: '/orders', color: '#D4AF37', bg: 'rgba(212,175,55,0.08)' },
     { Icon: Global, label: isAr ? 'لغة التطبيق' : 'Application language', path: null, color: '#6B7280', bg: 'rgba(107,114,128,0.08)', rightText: isAr ? 'English' : 'العربية', action: toggleLanguage },
   ];
+
+  const vendorMenu = isLoggedIn ? (isVendor
+    ? { Icon: Shop, label: isAr ? 'لوحة تحكم البائع' : 'Vendor Dashboard', path: '/vendor-portal/dashboard', color: '#D4AF37', bg: 'rgba(212,175,55,0.08)' }
+    : { Icon: Shop, label: isAr ? 'كن بائعاً' : 'Become a Vendor', path: '/vendor-portal', color: '#2D6A4F', bg: 'rgba(45,106,79,0.08)' }
+  ) : null;
 
   const infoMenu = [
     { Icon: InfoCircle, label: isAr ? 'من نحن' : 'About Us', path: '/help' },
@@ -51,23 +56,6 @@ export default function ProfilePage() {
           {isAr ? 'مرحباً' : 'Welcome'} {isLoggedIn ? (isAr ? user?.nameAr : user?.name) : ''}
         </p>
 
-        {/* Loyalty Points card */}
-        <div
-          style={{
-            background: '#FFFFFF', borderRadius: 16, padding: '14px 18px',
-            border: '1px solid #EDE8E1', marginBottom: 16,
-            display: 'flex', alignItems: 'center', gap: 14,
-          }}
-        >
-          <div style={{ width: 48, height: 48, borderRadius: 14, background: '#7A1E2B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Star1 size={22} variant="Bold" color="#D4AF37" />
-          </div>
-          <div style={{ flex: 1 }}>
-            <p style={{ fontSize: 12, color: '#8A7A70' }}>{isAr ? 'نقاط الولاء' : 'Loyalty points'}</p>
-            <p style={{ fontSize: 12, color: '#8A7A70', marginTop: 2 }}>{isAr ? 'نقاط معلقة' : 'Pending point'} <InfoCircle size={12} variant="Outline" color="#AEAEB2" /></p>
-          </div>
-          <Arrow size={18} variant="Outline" color="#AEAEB2" />
-        </div>
       </div>
 
       {/* Divider */}
@@ -92,6 +80,27 @@ export default function ProfilePage() {
           </button>
         ))}
       </div>
+
+      {/* Vendor Portal */}
+      {vendorMenu && (
+        <>
+          <div style={{ height: 6, background: '#F0EDED' }} />
+          <button
+            onClick={() => navigate(vendorMenu.path)}
+            style={{
+              width: '100%', display: 'flex', alignItems: 'center', gap: 14,
+              padding: '16px 20px', background: 'transparent', border: 'none',
+              cursor: 'pointer', textAlign: 'start',
+            }}
+          >
+            <div style={{ width: 40, height: 40, borderRadius: 12, background: vendorMenu.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <vendorMenu.Icon size={20} variant="Outline" color={vendorMenu.color} />
+            </div>
+            <span style={{ flex: 1, fontSize: 15, fontWeight: 600, color: '#1A1A1A' }}>{vendorMenu.label}</span>
+            <Arrow size={16} variant="Outline" color="#CDCDCF" />
+          </button>
+        </>
+      )}
 
       {/* Divider */}
       <div style={{ height: 6, background: '#F0EDED' }} />

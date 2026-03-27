@@ -165,16 +165,17 @@ function OrderDetailView({ order, onBack, onUpdateStatus, lang }) {
       transition={{ duration: 0.22 }}
       className="px-5 py-4 space-y-3"
     >
-      {/* Back + header */}
-      <div className="flex items-center gap-3 mb-1">
-        <button
-          onClick={onBack}
-          className="w-9 h-9 rounded-xl flex items-center justify-center active:scale-95 transition-transform"
-          style={{ background: 'white', boxShadow: '0 1px 4px rgba(0,0,0,0.07)' }}
-        >
-          <ArrowRight2 size={16} variant="Outline" color={DARK} style={{ transform: 'rotate(180deg)' }} />
-        </button>
-        <div className="flex-1">
+      {/* Back link + Header */}
+      <button
+        onClick={onBack}
+        className="flex items-center gap-1.5 mb-2 active:opacity-60 transition-opacity"
+        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+      >
+        <ArrowRight2 size={14} variant="Outline" color={MAROON} style={{ transform: 'rotate(180deg)' }} />
+        <span style={{ fontSize: 12, fontWeight: 600, color: MAROON }}>{lang === 'ar' ? 'العودة للطلبات' : 'Back to orders'}</span>
+      </button>
+      <div className="flex items-center justify-between mb-1">
+        <div>
           <h2 className="text-[15px] font-bold" style={{ color: DARK }}>#{order.id}</h2>
           <p className="text-[11px]" style={{ color: MUTED }}>{order.date}</p>
         </div>

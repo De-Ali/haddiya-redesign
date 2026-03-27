@@ -121,29 +121,35 @@ export default function CartPage() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, x: -80 }}
                     style={{
-                      position: 'relative', display: 'flex', alignItems: 'flex-start', gap: 12,
-                      background: '#FFFFFF', borderRadius: 16, padding: 12, marginBottom: 8,
-                      border: '1px solid #EDE8E1',
+                      display: 'flex', gap: 12, alignItems: 'center',
+                      background: '#FFFFFF', borderRadius: 16, padding: 10, marginBottom: 8,
+                      border: '1px solid rgba(0,0,0,0.04)',
+                      boxShadow: '0 1px 6px rgba(0,0,0,0.03)',
                     }}
                   >
-                    <img src={item.image} alt={item.name} style={{ width: 70, height: 70, borderRadius: 12, objectFit: 'cover', flexShrink: 0, background: '#EDE8E1' }} />
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, overflow: 'hidden' }}>
-                      <p style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A', lineHeight: 1.35, marginBottom: 2, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    <img src={item.image} alt="" style={{ width: 72, height: 72, borderRadius: 12, objectFit: 'cover', flexShrink: 0, background: '#F5F0EB' }} />
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', lineHeight: 1.3, marginBottom: 2, display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                         {lang === 'ar' ? item.nameAr : item.name}
                       </p>
-                      <p style={{ fontSize: 15, fontWeight: 700, color: '#7A1E2B', marginTop: 4 }}>
-                        {item.price.toFixed(3)} <span style={{ fontSize: 11, fontWeight: 500, color: '#8A7A70' }}>OMR</span>
+                      <p style={{ fontSize: 15, fontWeight: 700, color: '#7A1E2B', marginBottom: 6 }}>
+                        {item.price.toFixed(3)} <span style={{ fontSize: 10, fontWeight: 500, color: '#8A7A70' }}>OMR</span>
                       </p>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
-                        <button onClick={() => updateQty(item.id, item.qty + 1, item.variant)} style={{ width: 30, height: 30, border: '1px solid #EDE8E1', borderRadius: 8, background: '#FAF8F5', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                          <Add size={14} variant="Outline" color="#1A1A1A" />
+                      {/* Stepper inline */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 0, background: '#FAF8F5', borderRadius: 10, border: '1px solid #EDE8E1', overflow: 'hidden', width: 'fit-content' }}>
+                        <button onClick={() => updateQty(item.id, Math.max(1, item.qty - 1), item.variant)} className="active:scale-90 transition-transform" style={{ width: 30, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'transparent', cursor: 'pointer' }}>
+                          <Minus size={12} variant="Outline" color="#3C3C43" />
                         </button>
-                        <span style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A', minWidth: 20, textAlign: 'center' }}>{item.qty}</span>
-                        <button onClick={() => removeFromCart(item.id, item.variant)} style={{ width: 30, height: 30, border: '1px solid #EDE8E1', borderRadius: 8, background: '#FAF8F5', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                          <Trash size={14} variant="Outline" color="#C0392B" />
+                        <span style={{ width: 28, textAlign: 'center', fontSize: 13, fontWeight: 700, color: '#1A1A1A' }}>{item.qty}</span>
+                        <button onClick={() => updateQty(item.id, item.qty + 1, item.variant)} className="active:scale-90 transition-transform" style={{ width: 30, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'transparent', cursor: 'pointer' }}>
+                          <Add size={12} variant="Outline" color="#3C3C43" />
                         </button>
                       </div>
                     </div>
+                    {/* Delete */}
+                    <button onClick={() => removeFromCart(item.id, item.variant)} className="active:scale-90 transition-transform" style={{ width: 30, height: 30, borderRadius: 9, background: 'rgba(192,57,43,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: 'none', cursor: 'pointer', alignSelf: 'flex-start' }}>
+                      <Trash size={14} variant="Outline" color="#C0392B" />
+                    </button>
                   </motion.div>
                 ))}
               </div>

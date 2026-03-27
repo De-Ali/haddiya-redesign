@@ -42,17 +42,14 @@ const searchPages = ['/categories', '/wishlist'];
 const notifPages = ['/profile'];
 
 function getTitle(pathname, lang) {
-  // Exact match
   const exact = titles[pathname];
   if (exact) return exact[lang];
 
-  // Dynamic: /products/:categoryId or /products/:categoryId/:subcategoryId
   if (pathname.startsWith('/products/')) {
     const parts = pathname.split('/');
     const catId = parts[2];
     const cat = categories.find(c => String(c.id) === catId);
     if (cat) {
-      // Check for subcategory
       if (parts[3] && cat.subcategories) {
         const sub = cat.subcategories.find(s => s.id === parts[3]);
         if (sub) return lang === 'ar' ? sub.nameAr : sub.name;
@@ -62,13 +59,11 @@ function getTitle(pathname, lang) {
     return lang === 'ar' ? 'المنتجات' : 'Products';
   }
 
-  // Dynamic: /order/:id
   if (pathname.startsWith('/order/')) {
     const orderId = pathname.split('/')[2];
     return lang === 'ar' ? `طلب #${orderId}` : `Order #${orderId}`;
   }
 
-  // Dynamic: /vendor-portal/product/:id
   if (pathname.startsWith('/vendor-portal/product/')) {
     return lang === 'ar' ? 'تفاصيل المنتج' : 'Product Details';
   }
@@ -76,6 +71,24 @@ function getTitle(pathname, lang) {
   return '';
 }
 
+/* ─── Glass Icon Button ──────────────────────────────────────────────── */
+function GlassIconButton({ onClick, children }) {
+  return (
+    <button
+      onClick={onClick}
+      className="w-[38px] h-[38px] rounded-[13px] flex items-center justify-center active:scale-90 transition-all"
+      style={{
+        background: 'linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.4))',
+        border: '0.5px solid rgba(255,255,255,0.6)',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.8)',
+      }}
+    >
+      {children}
+    </button>
+  );
+}
+
+/* ─── AppBar ─────────────────────────────────────────────────────────── */
 export default function AppBar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -89,59 +102,63 @@ export default function AppBar() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -8 }}
+      initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="mx-4 mt-2 mb-1 px-4 py-2.5 flex items-center justify-between z-40 rounded-2xl"
+      transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="mx-3 mt-2 mb-1 px-3 py-2 flex items-center justify-between z-40"
       style={{
-        background: 'rgba(255,255,255,0.75)',
-        backdropFilter: 'blur(20px) saturate(1.5)',
-        WebkitBackdropFilter: 'blur(20px) saturate(1.5)',
-        border: '1px solid rgba(255,255,255,0.60)',
-        boxShadow: '0 2px 12px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.90)',
+        borderRadius: 20,
+        background: 'linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.45) 50%, rgba(248,245,240,0.55) 100%)',
+        backdropFilter: 'blur(40px) saturate(2.0)',
+        WebkitBackdropFilter: 'blur(40px) saturate(2.0)',
+        boxShadow: '0 4px 24px rgba(0,0,0,0.04), 0 1px 4px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.85)',
+        border: '0.5px solid rgba(212,175,55,0.12)',
       }}
     >
       {/* Left */}
-      <div className="min-w-[40px]">
+      <div className="min-w-[38px]">
         {canGoBack ? (
-          <button
-            onClick={() => navigate(-1)}
-            className="w-9 h-9 rounded-full flex items-center justify-center active:scale-90 transition-transform"
-            style={{ background: 'rgba(0,0,0,0.05)' }}
-          >
-            <BackIcon size={18} variant="Outline" color="#3C3C43" />
-          </button>
+          <GlassIconButton onClick={() => navigate(-1)}>
+            <BackIcon size={17} variant="Outline" color="#3C3C43" />
+          </GlassIconButton>
         ) : (
-          <div className="w-10" />
+          <div className="w-[38px]" />
         )}
       </div>
 
       {/* Title */}
-      <h1 className="font-display text-[18px] font-semibold text-dark tracking-tight leading-none flex-1 text-center px-3 truncate">
+      <h1
+        className="flex-1 text-center px-2 truncate"
+        style={{
+          fontFamily: 'Cormorant Garamond, serif',
+          fontSize: 19,
+          fontWeight: 700,
+          color: '#1C1C1E',
+          letterSpacing: '-0.01em',
+        }}
+      >
         {title}
       </h1>
 
       {/* Right */}
-      <div className="min-w-[40px] flex justify-end">
+      <div className="min-w-[38px] flex justify-end">
         {showSearch ? (
-          <button
-            onClick={() => navigate('/search')}
-            className="w-9 h-9 rounded-full flex items-center justify-center active:scale-90 transition-transform"
-            style={{ background: 'rgba(0,0,0,0.05)' }}
-          >
+          <GlassIconButton onClick={() => navigate('/search')}>
             <SearchNormal1 size={17} variant="Outline" color="#6B7280" />
-          </button>
+          </GlassIconButton>
         ) : showNotif ? (
-          <button
-            onClick={() => navigate('/notifications')}
-            className="w-10 h-10 rounded-full bg-white flex items-center justify-center relative active:scale-90 transition-transform shadow-soft"
-            style={{ border: '1px solid rgba(28,28,30,0.06)' }}
-          >
+          <GlassIconButton onClick={() => navigate('/notifications')}>
             <Notification size={17} variant="Outline" color="#6B7280" />
-            <span className="absolute top-1 end-1 w-[9px] h-[9px] bg-accent rounded-full border-[2px] border-white" />
-          </button>
+            <span
+              className="absolute top-[6px] end-[6px] w-[8px] h-[8px] rounded-full"
+              style={{
+                background: 'linear-gradient(135deg, #D4AF37, #C9A02C)',
+                boxShadow: '0 0 0 2px rgba(255,255,255,0.9)',
+              }}
+            />
+          </GlassIconButton>
         ) : (
-          <div className="w-10" />
+          <div className="w-[38px]" />
         )}
       </div>
     </motion.div>
