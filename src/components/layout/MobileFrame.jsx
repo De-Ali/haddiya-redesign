@@ -37,7 +37,7 @@ export default function MobileFrame({ children }) {
       className="flex flex-col mx-auto w-full relative"
       style={{
         maxWidth: '430px',
-        minHeight: '100dvh',
+        height: '100dvh',
         background: 'var(--color-bg)',
       }}
     >
@@ -51,14 +51,14 @@ export default function MobileFrame({ children }) {
       ) : (
         <>
           {showAppBar && (
-            <div className="shrink-0 z-40">
+            <div className="sticky top-0 shrink-0 z-40" style={{ background: 'var(--color-bg)' }}>
               <AppBar />
             </div>
           )}
 
           {/* Scrollable content — fills space between appbar and bottom nav */}
           <div
-            className="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar"
+            className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden no-scrollbar"
             style={{ paddingBottom: showNav ? '72px' : '0' }}
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -68,7 +68,7 @@ export default function MobileFrame({ children }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="min-h-full"
+                className=""
               >
                 {children}
               </motion.div>

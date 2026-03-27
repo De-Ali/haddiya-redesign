@@ -1,15 +1,31 @@
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ShieldTick } from 'iconsax-react';
 import { useLanguage } from '../../context/LanguageContext';
+import { useAuth } from '../../context/AuthContext';
 
 export default function OtpPage() {
   const navigate = useNavigate();
-  const { t, lang } = useLanguage();
+  const location = useLocation();
+  const { lang } = useLanguage();
+  const { login } = useAuth();
+  const isAr = lang === 'ar';
+
+  const phone = location.state?.phone || '+96896071771';
   const [otp, setOtp] = useState(['', '', '', '']);
   const refs = [useRef(), useRef(), useRef(), useRef()];
-  const isAr = lang === 'ar';
+  const [countdown, setCountdown] = useState(60);
+  const [canResend, setCanResend] = useState(false);
+
+  // Countdown timer
+  useEffect(() => {
+    if (countdown <= 0) {
+      setCanResend(true);
+      return;
+    }
+    const t = setTimeout(() => setCountdown(c => c - 1), 1000);
+    return () => clearTimeout(t);
+  }, [countdown]);
 
   const handleChange = (index, value) => {
     if (value.length > 1) return;
@@ -25,94 +41,138 @@ export default function OtpPage() {
     }
   };
 
+  const handleResend = () => {
+    setCountdown(60);
+    setCanResend(false);
+    setOtp(['', '', '', '']);
+  };
+
   const isFilled = otp.every(d => d);
 
+  const handleConfirm = () => {
+    if (isFilled) {
+      login();
+      navigate('/home');
+    }
+  };
+
+  const formatTime = (s) => {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return `${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+  };
+
   return (
-    <div className="flex-1 flex flex-col overflow-y-auto" style={{ background: '#F5F0EB' }}>
-      {/* ── Top logo section ── */}
+    <div className="flex-1 flex flex-col" style={{ background: '#FFFFFF' }}>
+      {/* ── Top curved section ── */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="flex flex-col items-center pt-12 pb-6"
       >
-        <img src={`${import.meta.env.BASE_URL}haddiya-logo.png`} alt="Haddiya" className="w-[80px] h-[80px] object-contain" />
-        <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '24px', fontWeight: 600, color: '#7A1E2B', marginTop: '8px' }}>
-          Haddiya
-        </h1>
+        <div
+          style={{
+            background: '#F5F0EB',
+            height: 100,
+            borderRadius: '0 0 50% 50% / 0 0 40px 40px',
+          }}
+        />
       </motion.div>
 
-      {/* ── White card ── */}
+      {/* ── Content ── */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.15, duration: 0.5 }}
-        className="flex-1 px-6 pt-8 pb-10 text-center"
-        style={{ background: '#FFFFFF', borderRadius: '28px 28px 0 0', boxShadow: '0 -4px 20px rgba(0,0,0,0.04)' }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+        className="flex-1 flex flex-col px-6 pt-10"
       >
-        {/* Shield icon */}
-        <div
-          className="w-[72px] h-[72px] rounded-2xl mx-auto flex items-center justify-center mb-6"
-          style={{ background: 'rgba(122,30,43,0.06)' }}
-        >
-          <ShieldTick size={36} variant="Bold" color="#7A1E2B" />
-        </div>
-
-        <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '26px', fontWeight: 700, color: '#7A1E2B', marginBottom: '6px' }}>
-          {isAr ? 'أدخل رمز التحقق' : 'Enter Verification Code'}
-        </h2>
-        <p className="text-[13px] mb-8 max-w-[260px] mx-auto leading-relaxed" style={{ color: '#8A7A70' }}>
-          {isAr ? 'أرسلنا رمزاً إلى هاتفك' : 'We sent a code to your phone'}
+        {/* Message text */}
+        <p style={{ fontSize: 15, color: '#1A1A1A', lineHeight: 1.6, marginBottom: 24 }}>
+          {isAr ? 'تم إرسال رسالة نصية إلى الرقم' : 'A text message has been sent with the'}{' '}
+          <span style={{ fontWeight: 700, color: '#1A1A1A' }}>{phone}</span>
         </p>
 
         {/* OTP inputs */}
-        <div className="flex gap-3.5 justify-center mb-8">
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginBottom: 32 }}>
           {otp.map((digit, i) => (
             <motion.input
               key={i}
               ref={refs[i]}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + i * 0.08 }}
+              transition={{ delay: 0.3 + i * 0.08 }}
               type="text"
               inputMode="numeric"
               maxLength={1}
               value={digit}
               onChange={e => handleChange(i, e.target.value)}
               onKeyDown={e => handleKeyDown(i, e)}
-              className="w-[60px] h-[60px] rounded-2xl text-center text-[22px] font-bold outline-none transition-all"
               style={{
-                background: digit ? 'rgba(122,30,43,0.04)' : '#F5F0EB',
-                border: digit ? '2px solid #7A1E2B' : '1.5px solid #EDE8E1',
+                width: 64,
+                height: 64,
+                borderRadius: 16,
+                textAlign: 'center',
+                fontSize: 22,
+                fontWeight: 700,
                 color: '#1A1A1A',
-                boxShadow: digit ? '0 0 0 4px rgba(122,30,43,0.06)' : 'none',
+                outline: 'none',
+                background: digit ? '#FFFFFF' : '#F0EDED',
+                border: digit ? '2px solid #7A1E2B' : '1px solid #E8E3E3',
+                transition: 'all 0.2s',
               }}
             />
           ))}
         </div>
 
-        {/* Verify button */}
+        {/* Resend / Timer */}
+        <div className="text-center">
+          <p style={{ fontSize: 14, color: '#8A7A70', marginBottom: 4 }}>
+            {isAr ? 'لم تستلم رمز التحقق' : 'Did not receive the verification code'}
+          </p>
+          {canResend ? (
+            <button
+              onClick={handleResend}
+              style={{ fontSize: 14, fontWeight: 600, color: '#7A1E2B', background: 'none', border: 'none', cursor: 'pointer' }}
+            >
+              {isAr ? 'إعادة إرسال' : 'Resend'}
+            </button>
+          ) : (
+            <p style={{ fontSize: 14, fontWeight: 500, color: '#AEAEB2' }}>
+              {formatTime(countdown)}
+            </p>
+          )}
+        </div>
+      </motion.div>
+
+      {/* ── Bottom button ── */}
+      <div
+        style={{
+          padding: '16px 24px 40px',
+          background: '#FFFFFF',
+          borderRadius: '24px 24px 0 0',
+          boxShadow: '0 -2px 12px rgba(0,0,0,0.04)',
+        }}
+      >
         <button
-          onClick={() => navigate('/home')}
-          className="w-full py-4 rounded-full text-[15px] font-bold active:scale-[0.98] transition-all mb-6"
+          onClick={handleConfirm}
+          disabled={!isFilled}
+          className="active:scale-[0.98] transition-all"
           style={{
-            background: isFilled ? '#D4AF37' : '#EDE8E1',
-            color: isFilled ? '#1A1A1A' : '#8A7A70',
-            boxShadow: isFilled ? '0 4px 16px rgba(212,175,55,0.3)' : 'none',
-            opacity: isFilled ? 1 : 0.7,
+            width: '100%',
+            height: 56,
+            borderRadius: 16,
+            background: isFilled ? '#7A1E2B' : '#EDE8E1',
+            color: isFilled ? '#FFFFFF' : '#AEAEB2',
+            fontSize: 16,
+            fontWeight: 600,
+            border: 'none',
+            cursor: isFilled ? 'pointer' : 'default',
+            boxShadow: isFilled ? '0 4px 16px rgba(122,30,43,0.25)' : 'none',
           }}
         >
-          {isAr ? 'تحقق' : 'Verify'}
+          {isAr ? 'تأكيد وتسجيل الدخول' : 'Confirm and login'}
         </button>
-
-        {/* Resend */}
-        <p className="text-[13px]" style={{ color: '#8A7A70' }}>
-          {isAr ? 'لم تستلم الرمز؟ ' : "Didn't receive the code? "}
-          <button className="font-bold" style={{ color: '#7A1E2B' }}>
-            {isAr ? 'إعادة إرسال' : 'Resend'}
-          </button>
-        </p>
-      </motion.div>
+      </div>
     </div>
   );
 }

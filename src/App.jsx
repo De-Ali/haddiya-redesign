@@ -18,6 +18,7 @@ import VendorStore from './pages/vendor/VendorStore';
 import AllVendors from './pages/vendor/AllVendors';
 import CartPage from './pages/cart/CartPage';
 import WishlistPage from './pages/cart/WishlistPage';
+import SendAsGift from './pages/cart/SendAsGift';
 import CheckoutPage from './pages/checkout/CheckoutPage';
 import OrderSuccess from './pages/checkout/OrderSuccess';
 import LoginPage from './pages/auth/LoginPage';
@@ -39,6 +40,7 @@ import VendorProducts from './pages/vendor-portal/VendorProducts';
 import VendorOrders from './pages/vendor-portal/VendorOrders';
 import VendorEarnings from './pages/vendor-portal/VendorEarnings';
 import ViewProduct from './pages/vendor-portal/ViewProduct';
+import ShippingTo from './pages/profile/ShippingTo';
 
 export default function App() {
   return (
@@ -63,6 +65,7 @@ export default function App() {
                   <Route path="/vendors" element={<AllVendors />} />
                   <Route path="/cart" element={<CartPage />} />
                   <Route path="/wishlist" element={<WishlistPage />} />
+                  <Route path="/send-as-gift" element={<SendAsGift />} />
                   <Route path="/checkout" element={<CheckoutPage />} />
                   <Route path="/order-success" element={<OrderSuccess />} />
                   <Route path="/login" element={<LoginPage />} />
@@ -81,6 +84,7 @@ export default function App() {
                   <Route path="/refund" element={<InfoPage type="refund" />} />
                   <Route path="/shipping" element={<InfoPage type="shipping" />} />
                   <Route path="/payment-methods" element={<InfoPage type="payment" />} />
+                  <Route path="/shipping-to" element={<ShippingTo />} />
                   <Route path="/vendor-portal" element={<VendorRegistration />} />
                   <Route path="/vendor-portal/dashboard" element={<VendorDashboard />} />
                   <Route path="/vendor-portal/add-product" element={<AddProduct />} />

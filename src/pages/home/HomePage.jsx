@@ -61,7 +61,7 @@ const giftIdeas = [
 ];
 
 /* ── Section Header ────────────────────────────────────────────────────────── */
-function SectionHeader({ title, subtitle, onViewAll, isRTL }) {
+function SectionHeader({ title, subtitle, onViewAll, isRTL, isAr }) {
   const Arrow = isRTL ? ArrowLeft2 : ArrowRight2;
   return (
     <div className="flex items-end justify-between mb-4 px-5">
@@ -79,7 +79,7 @@ function SectionHeader({ title, subtitle, onViewAll, isRTL }) {
           className="flex items-center gap-0.5 text-[12px] font-semibold active:scale-95 pb-0.5"
           style={{ color: '#7A1E2B' }}
         >
-          <span>View All</span>
+          <span>{isAr ? 'عرض الكل' : 'View All'}</span>
           <Arrow size={14} variant="Outline" color="#7A1E2B" />
         </button>
       )}
@@ -96,6 +96,7 @@ function Divider() {
 export default function HomePage() {
   const navigate = useNavigate();
   const { t, lang, toggleLanguage, isRTL } = useLanguage();
+  const isAr = lang === 'ar';
   const { openDrawer } = useDrawer();
 
   /* Hero carousel state */
@@ -119,8 +120,8 @@ export default function HomePage() {
   return (
     <div className="bg-mesh min-h-full pb-6">
 
-      {/* ══ Header ═══════════════════════════════════════════════════════════ */}
-      <div className="px-5 pt-4 pb-3 flex items-center justify-between">
+      {/* ══ Header (sticky) ════════════════════════════════════════════════ */}
+      <div className="px-5 pt-4 pb-3 flex items-center justify-between sticky top-0 z-30" style={{ background: 'var(--color-bg)' }}>
         <div className="flex items-center gap-2.5">
           {/* Hamburger menu */}
           <button
@@ -358,7 +359,7 @@ export default function HomePage() {
 
       {/* ══ Categories ═══════════════════════════════════════════════════════ */}
       <div className="mb-6">
-        <SectionHeader title={t.home.categories} onViewAll={() => navigate('/categories')} isRTL={isRTL} />
+        <SectionHeader title={t.home.categories} onViewAll={() => navigate('/categories')} isRTL={isRTL} isAr={isAr} />
         <div className="flex gap-3 px-5 overflow-x-auto no-scrollbar pb-1">
           {categories.map((cat, i) => (
             <CategoryChip key={cat.id} category={cat} index={i} />
@@ -374,7 +375,7 @@ export default function HomePage() {
           title={lang === 'ar' ? 'وصل حديثاً' : 'New Arrivals'}
           subtitle={lang === 'ar' ? 'أحدث الإضافات لمجموعتنا' : 'Latest additions to our collection'}
           onViewAll={() => navigate('/products/new')}
-          isRTL={isRTL}
+          isRTL={isRTL} isAr={isAr}
         />
         <div className="flex gap-3.5 px-5 overflow-x-auto no-scrollbar pb-2">
           {newProducts.map((p, i) => (
@@ -390,7 +391,7 @@ export default function HomePage() {
         <SectionHeader
           title={lang === 'ar' ? 'هدية لكل مناسبة' : 'Gift for Every Moment'}
           subtitle={lang === 'ar' ? 'اكتشف أفكار هدايا مميزة' : 'Explore unique gift ideas'}
-          isRTL={isRTL}
+          isRTL={isRTL} isAr={isAr}
         />
         <div className="flex gap-2.5 px-5 overflow-x-auto no-scrollbar pb-2">
           {giftIdeas.map((idea, i) => (
@@ -424,7 +425,7 @@ export default function HomePage() {
         <SectionHeader
           title={lang === 'ar' ? 'أفضل العلامات' : 'The Best Brands'}
           onViewAll={() => navigate('/vendors')}
-          isRTL={isRTL}
+          isRTL={isRTL} isAr={isAr}
         />
         <div className="flex gap-4 px-5 overflow-x-auto no-scrollbar pb-1">
           {vendors.slice(0, 5).map((v, i) => (
@@ -437,7 +438,7 @@ export default function HomePage() {
       <div className="mb-6">
         <SectionHeader
           title={lang === 'ar' ? 'هدية للجميع' : 'Gifts for Everyone'}
-          isRTL={isRTL}
+          isRTL={isRTL} isAr={isAr}
         />
         {/* Tab buttons */}
         <div className="flex gap-2 px-5 mb-4 overflow-x-auto no-scrollbar">
@@ -482,7 +483,7 @@ export default function HomePage() {
         <SectionHeader
           title={lang === 'ar' ? 'الأكثر رواجاً' : 'Trending Gifts'}
           subtitle={lang === 'ar' ? 'الأكثر شعبية لدى عملائنا' : 'Most loved by our customers'}
-          isRTL={isRTL}
+          isRTL={isRTL} isAr={isAr}
         />
         <div className="grid grid-cols-2 gap-3.5">
           {featuredProducts.map((p, i) => (

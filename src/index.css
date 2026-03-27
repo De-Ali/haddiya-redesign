@@ -157,7 +157,8 @@ body {
   pointer-events: none; z-index: 0;
 }
 
-.bg-mesh > * { position: relative; z-index: 1; }
+.bg-mesh > *:not([style*="sticky"]):not(.sticky) { position: relative; z-index: 1; }
+.bg-mesh > .sticky { z-index: 30; }
 
 .bg-gradient-maroon {
   background: linear-gradient(150deg, #8A2232 0%, #6E1A26 30%, #521218 65%, #300A0E 100%);

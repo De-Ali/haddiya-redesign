@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft2, ArrowRight2, SearchNormal1, Notification } from 'iconsax-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
+import { categories } from '../../data/categories';
 
 const titles = {
   '/categories':                   { en: 'Categories',        ar: 'الأقسام' },
@@ -21,6 +22,8 @@ const titles = {
   '/refund':                       { en: 'Returns & Refunds', ar: 'الإرجاع والاسترداد' },
   '/shipping':                     { en: 'Shipping Info',     ar: 'معلومات الشحن' },
   '/payment-methods':              { en: 'Payment Methods',   ar: 'طرق الدفع' },
+  '/shipping-to':                  { en: 'Shipping to',       ar: 'الشحن إلى' },
+  '/send-as-gift':                 { en: 'Send as a Gift',    ar: 'أرسل كهدية' },
   '/vendor-portal':                { en: 'Become a Vendor',   ar: 'كن بائعاً' },
   '/vendor-portal/dashboard':      { en: 'Vendor Dashboard',  ar: 'لوحة التحكم' },
   '/vendor-portal/add-product':    { en: 'Add Product',       ar: 'إضافة منتج' },
@@ -29,19 +32,58 @@ const titles = {
   '/vendor-portal/earnings':       { en: 'Earnings',          ar: 'الأرباح' },
 };
 
+/* Pages that are bottom-nav tabs — NO back arrow */
+const noBackRoutes = ['/categories', '/cart', '/wishlist', '/profile'];
+
+/* Pages that show a search icon on the right */
 const searchPages = ['/categories', '/wishlist'];
+
+/* Pages that show a notification bell on the right */
 const notifPages = ['/profile'];
-const tabRoots = ['/categories', '/cart', '/wishlist', '/profile'];
+
+function getTitle(pathname, lang) {
+  // Exact match
+  const exact = titles[pathname];
+  if (exact) return exact[lang];
+
+  // Dynamic: /products/:categoryId or /products/:categoryId/:subcategoryId
+  if (pathname.startsWith('/products/')) {
+    const parts = pathname.split('/');
+    const catId = parts[2];
+    const cat = categories.find(c => String(c.id) === catId);
+    if (cat) {
+      // Check for subcategory
+      if (parts[3] && cat.subcategories) {
+        const sub = cat.subcategories.find(s => s.id === parts[3]);
+        if (sub) return lang === 'ar' ? sub.nameAr : sub.name;
+      }
+      return lang === 'ar' ? cat.nameAr : cat.name;
+    }
+    return lang === 'ar' ? 'المنتجات' : 'Products';
+  }
+
+  // Dynamic: /order/:id
+  if (pathname.startsWith('/order/')) {
+    const orderId = pathname.split('/')[2];
+    return lang === 'ar' ? `طلب #${orderId}` : `Order #${orderId}`;
+  }
+
+  // Dynamic: /vendor-portal/product/:id
+  if (pathname.startsWith('/vendor-portal/product/')) {
+    return lang === 'ar' ? 'تفاصيل المنتج' : 'Product Details';
+  }
+
+  return '';
+}
 
 export default function AppBar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { lang, isRTL } = useLanguage();
 
-  const titleObj = titles[pathname];
-  const title = titleObj ? titleObj[lang] : '';
+  const title = getTitle(pathname, lang);
   const BackIcon = isRTL ? ArrowRight2 : ArrowLeft2;
-  const canGoBack = !tabRoots.includes(pathname);
+  const canGoBack = !noBackRoutes.includes(pathname);
   const showSearch = searchPages.includes(pathname);
   const showNotif = notifPages.includes(pathname);
 
