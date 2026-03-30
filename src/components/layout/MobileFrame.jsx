@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import BottomNav from './BottomNav';
@@ -26,6 +27,11 @@ const fullScreenRoutes = [
 /* ─── MobileFrame ────────────────────────────────────────────────────────── */
 export default function MobileFrame({ children }) {
   const { pathname } = useLocation();
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo(0, 0);
+  }, [pathname]);
 
   const showNav          = !noNavRoutes.includes(pathname);
   const hasCustomHeader  = customHeaderRoutes.some(r => pathname.startsWith(r));
@@ -58,6 +64,7 @@ export default function MobileFrame({ children }) {
 
           {/* Scrollable content — fills space between appbar and bottom nav */}
           <div
+            ref={scrollRef}
             className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden no-scrollbar"
             style={{ paddingBottom: showNav ? '72px' : '0' }}
           >
