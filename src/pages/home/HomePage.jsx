@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  SearchNormal1, Notification, Global, ArrowRight2, ArrowLeft2,
+  SearchNormal1, Notification, ArrowRight2, ArrowLeft2,
   Setting4, Man, Woman, People, Lovely, HambergerMenu,
 } from 'iconsax-react';
 import { useLanguage } from '../../context/LanguageContext';
@@ -10,6 +10,7 @@ import { useDrawer } from '../../context/DrawerContext';
 import { products } from '../../data/products';
 import { categories } from '../../data/categories';
 import { vendors } from '../../data/vendors';
+import LanguageDropdown from '../../components/ui/LanguageDropdown';
 import CategoryChip from '../../components/ui/CategoryChip';
 import ProductCard from '../../components/ui/ProductCard';
 import VendorCard from '../../components/ui/VendorCard';
@@ -154,20 +155,7 @@ export default function HomePage() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <button
-            onClick={toggleLanguage}
-            className="h-[38px] px-3 rounded-[13px] flex items-center gap-1.5 active:scale-90 transition-all"
-            style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.4))',
-              border: '0.5px solid rgba(255,255,255,0.6)',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.8)',
-            }}
-          >
-            <Global size={16} variant="Outline" color="#6B7280" />
-            <span className="text-[11px] font-bold" style={{ color: '#1C1C1E' }}>
-              {lang === 'ar' ? 'En' : 'Ar'}
-            </span>
-          </button>
+          <LanguageDropdown />
           <button
             onClick={() => navigate('/notifications')}
             className="w-[38px] h-[38px] rounded-[13px] flex items-center justify-center relative active:scale-90 transition-all"
