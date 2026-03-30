@@ -225,7 +225,7 @@ export default function CartPage() {
           }}
         >
           <span style={{ fontSize: 14, fontWeight: 500, color: '#3C3C43' }}>
-            {lang === 'ar' ? 'إرسال كهدية' : 'Send as a gift'}
+            {lang === 'ar' ? 'إرسال كهدية 🎁' : 'Send as a gift 🎁'}
           </span>
           <Edit2 size={18} variant="Outline" color="#7A1E2B" />
         </button>

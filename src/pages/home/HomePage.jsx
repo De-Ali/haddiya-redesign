@@ -156,14 +156,17 @@ export default function HomePage() {
         <div className="flex items-center gap-2">
           <button
             onClick={toggleLanguage}
-            className="w-[38px] h-[38px] rounded-[13px] flex items-center justify-center active:scale-90 transition-all"
+            className="h-[38px] px-3 rounded-[13px] flex items-center gap-1.5 active:scale-90 transition-all"
             style={{
               background: 'linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.4))',
               border: '0.5px solid rgba(255,255,255,0.6)',
               boxShadow: '0 2px 8px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.8)',
             }}
           >
-            <Global size={18} variant="Outline" color="#6B7280" />
+            <Global size={16} variant="Outline" color="#6B7280" />
+            <span className="text-[11px] font-bold" style={{ color: '#1C1C1E' }}>
+              {lang === 'ar' ? 'En' : 'Ar'}
+            </span>
           </button>
           <button
             onClick={() => navigate('/notifications')}

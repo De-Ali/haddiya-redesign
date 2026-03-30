@@ -60,22 +60,35 @@ export default function ProductCard({ product, index = 0 }) {
           )}
         </div>
 
-        {/* Wishlist — top end */}
-        <button
-          onClick={(e) => { e.stopPropagation(); toggleWishlist(product); }}
-          className="absolute top-2.5 end-2.5 w-8 h-8 rounded-full flex items-center justify-center active:scale-85 transition-all"
-          style={{
-            background: wishlisted ? 'rgba(122,30,43,0.92)' : 'rgba(255,255,255,0.80)',
-            backdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255,255,255,0.30)',
-          }}
-        >
-          <Heart
-            size={14}
-            variant={wishlisted ? 'Bold' : 'Outline'}
-            color={wishlisted ? '#fff' : 'rgba(28,28,30,0.45)'}
-          />
-        </button>
+        {/* Wishlist + Cart — top end */}
+        <div className="absolute top-2.5 end-2.5 flex flex-col gap-1.5">
+          <button
+            onClick={(e) => { e.stopPropagation(); toggleWishlist(product); }}
+            className="w-8 h-8 rounded-full flex items-center justify-center active:scale-85 transition-all"
+            style={{
+              background: wishlisted ? 'rgba(122,30,43,0.92)' : 'rgba(255,255,255,0.80)',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255,255,255,0.30)',
+            }}
+          >
+            <Heart
+              size={14}
+              variant={wishlisted ? 'Bold' : 'Outline'}
+              color={wishlisted ? '#fff' : 'rgba(28,28,30,0.45)'}
+            />
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); addToCart(product); }}
+            className="w-8 h-8 rounded-full flex items-center justify-center active:scale-85 transition-all"
+            style={{
+              background: 'rgba(122,30,43,0.92)',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255,255,255,0.15)',
+            }}
+          >
+            <Bag2 size={14} variant="Bold" color="#FFFFFF" />
+          </button>
+        </div>
       </div>
 
       {/* ── Info ── */}

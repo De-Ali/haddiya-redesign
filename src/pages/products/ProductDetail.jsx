@@ -142,27 +142,64 @@ export default function ProductDetail() {
           </div>
 
           {/* Variants */}
-          {product.variants.length > 0 && product.variants.map(v => (
-            <div key={v.type} className="mb-4">
-              <p className="text-[12px] font-semibold mb-2.5" style={{ color: '#1C1C1E' }}>{v.type}</p>
-              <div className="flex gap-2 flex-wrap">
-                {v.options.map(opt => (
-                  <button
-                    key={opt}
-                    onClick={() => setSelectedVariant(opt)}
-                    className="px-4 py-2 rounded-xl text-[12px] font-medium transition-all"
-                    style={{
-                      background: selectedVariant === opt ? '#7A1E2B' : 'transparent',
-                      color: selectedVariant === opt ? '#fff' : '#1C1C1E',
-                      border: selectedVariant === opt ? '1.5px solid #7A1E2B' : '1.5px solid rgba(0,0,0,0.08)',
-                    }}
-                  >
-                    {opt}
-                  </button>
-                ))}
+          {product.variants.length > 0 && product.variants.map(v => {
+            const colorSwatchMap = {
+              'Red': '#C0392B', 'Pink': '#E8A0BF', 'White': '#F5F5F5', 'Black': '#1C1C1E',
+              'Tan': '#D2B48C', 'Burgundy': '#7A1E2B', 'Gold': '#D4AF37', 'Rose Gold': '#B76E79',
+              'Silver': '#C0C0C0', 'Brown': '#8B4513', 'Blue': '#2C5F8A', 'Green': '#2D6A4F',
+            };
+            const isColorType = v.type === 'Color' || v.type === 'Metal';
+
+            return (
+              <div key={v.type} className="mb-4">
+                <div className="flex items-center gap-2 mb-2.5">
+                  <p className="text-[12px] font-semibold" style={{ color: '#1C1C1E' }}>{v.type}</p>
+                  {isColorType && selectedVariant && (
+                    <span className="text-[11px] font-medium" style={{ color: '#8E8E93' }}>{selectedVariant}</span>
+                  )}
+                </div>
+                <div className="flex gap-2.5 flex-wrap">
+                  {v.options.map(opt => {
+                    const isSelected = selectedVariant === opt;
+                    if (isColorType && colorSwatchMap[opt]) {
+                      return (
+                        <button
+                          key={opt}
+                          onClick={() => setSelectedVariant(opt)}
+                          className="relative w-9 h-9 rounded-full transition-all active:scale-90"
+                          style={{
+                            background: colorSwatchMap[opt],
+                            boxShadow: isSelected ? `0 0 0 2.5px #F5F0EB, 0 0 0 4.5px #7A1E2B` : '0 1px 4px rgba(0,0,0,0.10)',
+                            border: opt === 'White' ? '1px solid rgba(0,0,0,0.08)' : 'none',
+                          }}
+                        >
+                          {isSelected && (
+                            <svg className="absolute inset-0 m-auto" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={opt === 'White' || opt === 'Silver' ? '#1C1C1E' : '#fff'} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                          )}
+                        </button>
+                      );
+                    }
+                    return (
+                      <button
+                        key={opt}
+                        onClick={() => setSelectedVariant(opt)}
+                        className="px-4 py-2 rounded-xl text-[12px] font-medium transition-all"
+                        style={{
+                          background: isSelected ? '#7A1E2B' : 'transparent',
+                          color: isSelected ? '#fff' : '#1C1C1E',
+                          border: isSelected ? '1.5px solid #7A1E2B' : '1.5px solid rgba(0,0,0,0.08)',
+                        }}
+                      >
+                        {opt}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           {/* Quantity */}
           <div className="flex items-center justify-between mb-5">
