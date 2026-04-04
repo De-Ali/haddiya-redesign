@@ -63,7 +63,7 @@ const INITIAL_ORDERS = [
   },
   {
     id: 'HD-090',
-    customer: 'Ahmed Al-Rashdi',
+    customer: 'Ibrahim Al Hadrami',
     phone: '+968 9456 7890',
     address: 'Nizwa, Ad Dakhiliyah, Oman',
     date: '2026-03-19',
