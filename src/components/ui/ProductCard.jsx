@@ -1,9 +1,44 @@
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Bag2, Star1 } from 'iconsax-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useCart } from '../../context/CartContext';
 import { vendors } from '../../data/vendors';
+
+function RotatingBadge({ isNew, discount }) {
+  const badges = [];
+  if (isNew) badges.push({ text: 'NEW', bg: 'rgba(122,30,43,0.90)' });
+  if (discount) badges.push({ text: `-${discount}%`, bg: 'rgba(255,59,48,0.90)' });
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (badges.length <= 1) return;
+    const t = setInterval(() => setActive(p => (p + 1) % badges.length), 2500);
+    return () => clearInterval(t);
+  }, [badges.length]);
+
+  if (badges.length === 0) return null;
+  const b = badges[active];
+
+  return (
+    <div className="absolute top-2.5 start-2.5">
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={b.text}
+          initial={{ opacity: 0, y: -6, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 6, scale: 0.9 }}
+          transition={{ duration: 0.25 }}
+          className="px-2.5 py-[4px] rounded-lg text-[9px] font-bold tracking-wider uppercase text-white backdrop-blur-sm inline-block"
+          style={{ background: b.bg }}
+        >
+          {b.text}
+        </motion.span>
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function ProductCard({ product, index = 0 }) {
   const navigate = useNavigate();
@@ -40,25 +75,8 @@ export default function ProductCard({ product, index = 0 }) {
           loading="lazy"
         />
 
-        {/* Badges — top start */}
-        <div className="absolute top-2.5 start-2.5 flex flex-col gap-1">
-          {product.isNew && (
-            <span
-              className="px-2 py-[3px] rounded-lg text-[9px] font-bold tracking-wider uppercase text-white backdrop-blur-sm"
-              style={{ background: 'rgba(122,30,43,0.90)' }}
-            >
-              NEW
-            </span>
-          )}
-          {discount && (
-            <span
-              className="px-2 py-[3px] rounded-lg text-[9px] font-bold text-white backdrop-blur-sm"
-              style={{ background: 'rgba(255,59,48,0.90)' }}
-            >
-              -{discount}%
-            </span>
-          )}
-        </div>
+        {/* Badge — single rotating tag */}
+        <RotatingBadge isNew={product.isNew} discount={discount} />
 
         {/* Wishlist + Cart — top end */}
         <div className="absolute top-2.5 end-2.5 flex flex-col gap-1.5">

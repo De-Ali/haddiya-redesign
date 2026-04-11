@@ -47,49 +47,32 @@ export default function CartPage() {
     return acc;
   }, {});
 
-  /* ── Empty / Not logged in ── */
+  /* ── Empty cart (same for logged in or not) ── */
   if (cartItems.length === 0) {
     return (
       <div
         className="flex-1 flex flex-col items-center justify-center px-6"
         style={{ minHeight: 'calc(100dvh - 160px)', background: '#FAF8F5' }}
       >
-        {!isLoggedIn ? (
-          <>
-            <img
-              src={`${import.meta.env.BASE_URL}haddiya-logo.png`}
-              alt="Haddiya"
-              className="w-[100px] h-[100px] object-contain mb-6"
-            />
-            <button
-              onClick={() => navigate('/login-phone', { state: { returnTo: '/cart' } })}
-              className="w-full max-w-[280px] h-[52px] rounded-2xl text-[15px] font-bold active:scale-[0.98] transition-transform"
-              style={{ background: '#7A1E2B', color: '#FFFFFF', boxShadow: '0 4px 16px rgba(122,30,43,0.25)' }}
-            >
-              {lang === 'ar' ? 'تسجيل / دخول' : 'Register / Login'}
-            </button>
-          </>
-        ) : (
-          <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center">
-            <div className="w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-5" style={{ background: 'rgba(122,30,43,0.06)' }}>
-              <ShoppingBag size={32} variant="Outline" color="#7A1E2B" />
-            </div>
-            <h3 className="text-[16px] font-semibold mb-1" style={{ color: '#1A1A1A' }}>
-              {lang === 'ar' ? 'سلتك فارغة' : 'Your cart is empty'}
-            </h3>
-            <p className="text-[13px] mb-6" style={{ color: '#8A7A70' }}>
-              {lang === 'ar' ? 'أضف بعض المنتجات للبدء' : 'Add some items to get started'}
-            </p>
-            <button
-              onClick={() => navigate('/home')}
-              className="flex items-center gap-2 px-6 h-[48px] rounded-full text-[14px] font-semibold active:scale-95 transition-transform mx-auto"
-              style={{ background: '#D4AF37', color: '#1A1A1A' }}
-            >
-              {lang === 'ar' ? 'تسوق الآن' : 'Start Shopping'}
-              <ArrowRight2 size={16} variant="Outline" color="#1A1A1A" />
-            </button>
-          </motion.div>
-        )}
+        <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center">
+          <div className="w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-5" style={{ background: 'rgba(122,30,43,0.06)' }}>
+            <ShoppingBag size={32} variant="Outline" color="#7A1E2B" />
+          </div>
+          <h3 className="text-[16px] font-semibold mb-1" style={{ color: '#1A1A1A' }}>
+            {lang === 'ar' ? 'سلتك فارغة' : 'Your cart is empty'}
+          </h3>
+          <p className="text-[13px] mb-6" style={{ color: '#8A7A70' }}>
+            {lang === 'ar' ? 'أضف بعض المنتجات للبدء' : 'Add some items to get started'}
+          </p>
+          <button
+            onClick={() => navigate('/home')}
+            className="flex items-center gap-2 px-6 h-[48px] rounded-full text-[14px] font-semibold active:scale-95 transition-transform mx-auto"
+            style={{ background: '#D4AF37', color: '#1A1A1A' }}
+          >
+            {lang === 'ar' ? 'تسوق الآن' : 'Start Shopping'}
+            <ArrowRight2 size={16} variant="Outline" color="#1A1A1A" />
+          </button>
+        </motion.div>
       </div>
     );
   }
@@ -255,7 +238,7 @@ export default function CartPage() {
       {/* ── Sticky Checkout Button ── */}
       <div style={{ position: 'fixed', bottom: 72, left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: 430, padding: '12px 16px', background: 'linear-gradient(to top, #FAF8F5 80%, transparent)', zIndex: 40 }}>
         <button
-          onClick={() => navigate('/checkout')}
+          onClick={() => isLoggedIn ? navigate('/checkout') : navigate('/login-phone', { state: { returnTo: '/checkout' } })}
           className="active:scale-[0.98] transition-transform"
           style={{ width: '100%', height: 52, borderRadius: 50, background: '#7A1E2B', color: '#FFFFFF', fontSize: 15, fontWeight: 600, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, boxShadow: '0 4px 16px rgba(122,30,43,0.25)' }}
         >

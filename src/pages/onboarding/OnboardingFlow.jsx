@@ -36,14 +36,18 @@ const slides = [
 export default function OnboardingFlow() {
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
-  const { lang } = useLanguage();
+  const { lang, toggleLanguage } = useLanguage();
   const isAr = lang === 'ar';
 
   const slide = slides[step];
 
   const handleNext = () => {
-    if (step === 2) navigate('/signup');
-    else setStep(s => s + 1);
+    if (step === 2) {
+      localStorage.setItem('haddiya_onboarded', '1');
+      navigate('/home');
+    } else {
+      setStep(s => s + 1);
+    }
   };
 
   return (
@@ -68,10 +72,27 @@ export default function OnboardingFlow() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Skip button */}
-      <div className="relative z-10 flex justify-end px-6 pt-14">
+      {/* Top bar: Language toggle + Skip */}
+      <div className="relative z-10 flex items-center justify-between px-6 pt-14">
+        {/* Language toggle */}
         <button
-          onClick={() => navigate('/signup')}
+          onClick={toggleLanguage}
+          className="flex items-center gap-2 px-3 py-2 rounded-xl active:scale-95 transition-all"
+          style={{
+            background: 'rgba(255,255,255,0.15)',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255,255,255,0.20)',
+          }}
+        >
+          <span className="text-[14px]">{lang === 'ar' ? '🇺🇸' : '🇴🇲'}</span>
+          <span className="text-white text-[12px] font-semibold">
+            {lang === 'ar' ? 'English' : 'العربية'}
+          </span>
+        </button>
+
+        {/* Skip */}
+        <button
+          onClick={() => { localStorage.setItem('haddiya_onboarded', '1'); navigate('/home'); }}
           className="text-white/70 text-[14px] font-medium px-3 py-1.5 rounded-xl active:bg-white/10 transition-colors"
         >
           {isAr ? 'تخطي' : 'Skip'}

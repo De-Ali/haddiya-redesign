@@ -36,7 +36,7 @@ const titles = {
 const noBackRoutes = ['/categories', '/cart', '/wishlist', '/profile'];
 
 /* Pages that show a search icon on the right */
-const searchPages = ['/categories', '/wishlist'];
+const searchPages = ['/categories', '/wishlist', '/products'];
 
 /* Pages that show a notification bell on the right */
 const notifPages = ['/profile'];
@@ -97,7 +97,7 @@ export default function AppBar() {
   const title = getTitle(pathname, lang);
   const BackIcon = isRTL ? ArrowRight2 : ArrowLeft2;
   const canGoBack = !noBackRoutes.includes(pathname);
-  const showSearch = searchPages.includes(pathname);
+  const showSearch = searchPages.some(p => pathname === p || pathname.startsWith(p + '/'));
   const showNotif = notifPages.includes(pathname);
 
   return (

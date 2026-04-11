@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import BottomNav from './BottomNav';
 import AppBar from './AppBar';
+import GiftAssistant from '../ui/GiftAssistant';
 
 const noNavRoutes = [
   '/', '/splash', '/onboarding',
@@ -88,6 +89,7 @@ export default function MobileFrame({ children }) {
               <BottomNav />
             </div>
           )}
+          {showNav && <GiftAssistant />}
         </>
       )}
     </div>

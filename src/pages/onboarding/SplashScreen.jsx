@@ -6,7 +6,8 @@ export default function SplashScreen() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => navigate('/onboarding'), 2800);
+    const seen = localStorage.getItem('haddiya_onboarded');
+    const timer = setTimeout(() => navigate(seen ? '/home' : '/onboarding'), 2800);
     return () => clearTimeout(timer);
   }, [navigate]);
 
