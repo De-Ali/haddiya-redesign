@@ -61,9 +61,7 @@ export default function ProductCard({ product, index = 0 }) {
       transition={{ duration: 0.4, delay: index * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
       whileTap={{ scale: 0.975 }}
       className="bg-white rounded-[20px] overflow-hidden cursor-pointer group"
-      style={{
-        boxShadow: '0 2px 16px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.02)',
-      }}
+      style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.02)' }}
       onClick={() => navigate(`/product/${product.id}`)}
     >
       {/* ── Image ── */}
@@ -74,92 +72,61 @@ export default function ProductCard({ product, index = 0 }) {
           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           loading="lazy"
         />
-
-        {/* Badge — single rotating tag */}
         <RotatingBadge isNew={product.isNew} discount={discount} />
-
-        {/* Wishlist + Cart — top end */}
-        <div className="absolute top-2.5 end-2.5 flex flex-col gap-1.5">
-          <button
-            onClick={(e) => { e.stopPropagation(); toggleWishlist(product); }}
-            className="w-8 h-8 rounded-full flex items-center justify-center active:scale-85 transition-all"
-            style={{
-              background: wishlisted ? 'rgba(122,30,43,0.92)' : 'rgba(255,255,255,0.80)',
-              backdropFilter: 'blur(12px)',
-              border: '1px solid rgba(255,255,255,0.30)',
-            }}
-          >
-            <Heart
-              size={14}
-              variant={wishlisted ? 'Bold' : 'Outline'}
-              color={wishlisted ? '#fff' : 'rgba(28,28,30,0.45)'}
-            />
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); addToCart(product); }}
-            className="w-8 h-8 rounded-full flex items-center justify-center active:scale-85 transition-all"
-            style={{
-              background: 'rgba(122,30,43,0.92)',
-              backdropFilter: 'blur(12px)',
-              border: '1px solid rgba(255,255,255,0.15)',
-            }}
-          >
-            <Bag2 size={14} variant="Bold" color="#FFFFFF" />
-          </button>
-        </div>
       </div>
 
       {/* ── Info ── */}
-      <div className="p-3.5 pt-3">
-        {/* Vendor */}
+      <div className="p-3 pt-2.5">
         {vendor && (
-          <div className="flex items-center gap-1.5 mb-1.5">
-            <img
-              src={vendor.logo}
-              alt={vendorName}
-              className="w-[14px] h-[14px] rounded object-cover"
-            />
-            <span className="text-[10px] font-medium truncate leading-none" style={{ color: '#AEAEB2' }}>
-              {vendorName}
-            </span>
+          <div className="flex items-center gap-1.5 mb-1">
+            <img src={vendor.logo} alt={vendorName} className="w-[14px] h-[14px] rounded object-cover" />
+            <span className="text-[10px] font-medium truncate leading-none" style={{ color: '#AEAEB2' }}>{vendorName}</span>
           </div>
         )}
 
-        {/* Name */}
-        <h3 className="text-[13px] font-semibold text-dark leading-snug line-clamp-2 mb-1.5 tracking-[-0.01em]">
-          {displayName}
-        </h3>
+        <h3 className="text-[13px] font-semibold text-dark leading-snug line-clamp-2 mb-1 tracking-[-0.01em]">{displayName}</h3>
 
         {/* Rating */}
-        <div className="flex items-center gap-1 mb-2">
+        <div className="flex items-center gap-1 mb-1.5">
           <div className="flex gap-[2px]">
             {[1, 2, 3, 4, 5].map((star) => (
-              <Star1
-                key={star}
-                size={10}
-                variant={star <= Math.round(product.rating) ? 'Bold' : 'Outline'}
-                color={star <= Math.round(product.rating) ? '#D4AF37' : 'rgba(28,28,30,0.15)'}
-              />
+              <Star1 key={star} size={10} variant={star <= Math.round(product.rating) ? 'Bold' : 'Outline'} color={star <= Math.round(product.rating) ? '#D4AF37' : 'rgba(28,28,30,0.15)'} />
             ))}
           </div>
-          <span className="text-[9px] font-medium" style={{ color: '#AEAEB2' }}>
-            ({product.reviewCount})
-          </span>
+          <span className="text-[9px] font-medium" style={{ color: '#AEAEB2' }}>({product.reviewCount})</span>
         </div>
 
-        {/* Price */}
-        <div className="flex items-baseline gap-1">
-          <span className="text-[15px] font-bold text-primary tracking-tight">
-            {product.price.toFixed(3)}
-          </span>
-          <span className="text-[9px] font-semibold uppercase tracking-wider" style={{ color: '#B87D88' }}>
-            OMR
-          </span>
+        {/* Price row */}
+        <div className="flex items-baseline gap-1 mb-2.5">
+          <span className="text-[15px] font-bold text-primary tracking-tight">{product.price.toFixed(3)}</span>
+          <span className="text-[9px] font-semibold uppercase tracking-wider" style={{ color: '#B87D88' }}>OMR</span>
           {product.originalPrice && (
-            <span className="text-[10px] line-through ms-auto" style={{ color: '#C7C7CC' }}>
-              {product.originalPrice.toFixed(3)}
-            </span>
+            <span className="text-[10px] line-through ms-auto" style={{ color: '#C7C7CC' }}>{product.originalPrice.toFixed(3)}</span>
           )}
+        </div>
+
+        {/* ── Action Buttons ── */}
+        <div className="flex gap-2">
+          <button
+            onClick={(e) => { e.stopPropagation(); toggleWishlist(product); }}
+            className="flex-1 h-[34px] rounded-xl flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+            style={{
+              background: wishlisted ? 'rgba(122,30,43,0.06)' : '#FAF8F5',
+              border: wishlisted ? '1.5px solid #7A1E2B' : '1px solid rgba(0,0,0,0.05)',
+            }}
+          >
+            <Heart size={14} variant={wishlisted ? 'Bold' : 'Outline'} color={wishlisted ? '#7A1E2B' : '#8A7A70'} />
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); addToCart(product); }}
+            className="flex-[2] h-[34px] rounded-xl flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+            style={{ background: '#7A1E2B', boxShadow: '0 2px 8px rgba(122,30,43,0.20)' }}
+          >
+            <Bag2 size={14} variant="Bold" color="#FFFFFF" />
+            <span style={{ color: '#FFFFFF', fontSize: 11, fontWeight: 600 }}>
+              {lang === 'ar' ? 'أضف' : 'Add'}
+            </span>
+          </button>
         </div>
       </div>
     </motion.div>
