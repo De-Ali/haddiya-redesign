@@ -137,7 +137,7 @@ export default function VendorEarnings() {
 
       {/* ── Payout History ── */}
       <div style={{ padding: '0 20px' }}>
-        <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 18, fontWeight: 700, color: '#1A1A1A', marginBottom: 12 }}>
+        <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 700, color: '#1A1A1A', marginBottom: 12 }}>
           {isAr ? 'سجل المدفوعات' : 'Payout History'}
         </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>

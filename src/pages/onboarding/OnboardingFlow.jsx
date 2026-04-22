@@ -125,7 +125,7 @@ export default function OnboardingFlow() {
               {/* Title */}
               <h2
                 className="text-center leading-tight mb-2"
-                style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '28px', fontWeight: 700, color: '#FFFFFF', whiteSpace: 'pre-line' }}
+                style={{ fontFamily: 'var(--font-display)', fontSize: '28px', fontWeight: 700, color: '#FFFFFF', whiteSpace: 'pre-line' }}
               >
                 {isAr ? slide.titleAr : slide.title}
               </h2>

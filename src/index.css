@@ -26,7 +26,9 @@
   --color-error:         #FF3B30;
   --color-warning:       #FF9500;
 
-  --font-display: 'Cormorant Garamond', Georgia, serif;
+  /* Typography — consolidated to 2 fonts (per client request):
+     DM Sans for Latin (display + body via weight variance) · Tajawal for Arabic */
+  --font-display: 'DM Sans', system-ui, sans-serif;
   --font-body:    'DM Sans', system-ui, sans-serif;
   --font-arabic:  'Tajawal', sans-serif;
 }

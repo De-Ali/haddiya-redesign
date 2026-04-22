@@ -130,7 +130,7 @@ export default function AppBar() {
       <h1
         className="flex-1 text-center px-2 truncate"
         style={{
-          fontFamily: 'Cormorant Garamond, serif',
+          fontFamily: 'var(--font-display)',
           fontSize: 19,
           fontWeight: 700,
           color: '#1C1C1E',

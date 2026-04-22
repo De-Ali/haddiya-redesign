@@ -26,7 +26,7 @@ export default function LogoutSheet({ isOpen, onClose, onConfirm }) {
       <h2
         className="font-heading"
         style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: 'var(--font-display)',
           fontSize: 22,
           fontWeight: 600,
           color: '#7A1E2B',

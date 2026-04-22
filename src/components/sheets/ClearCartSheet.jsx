@@ -26,7 +26,7 @@ export default function ClearCartSheet({ isOpen, onClose, onConfirm, itemCount =
       <h2
         className="font-heading"
         style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: 'var(--font-display)',
           fontSize: 22,
           fontWeight: 600,
           color: '#1A1A1A',

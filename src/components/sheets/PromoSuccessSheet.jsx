@@ -38,7 +38,7 @@ export default function PromoSuccessSheet({ isOpen, onClose, onContinue, promoCo
       <h2
         className="font-heading"
         style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: 'var(--font-display)',
           fontSize: 24,
           fontWeight: 600,
           color: '#1A1A1A',
@@ -115,7 +115,7 @@ export default function PromoSuccessSheet({ isOpen, onClose, onContinue, promoCo
                 style={{
                   fontSize: 18,
                   fontWeight: 700,
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: 'var(--font-display)',
                   color: '#D4AF37',
                 }}
               >

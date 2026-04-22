@@ -110,27 +110,40 @@ export default function CartPage() {
                       boxShadow: '0 1px 6px rgba(0,0,0,0.03)',
                     }}
                   >
-                    <img src={item.image} alt="" style={{ width: 72, height: 72, borderRadius: 12, objectFit: 'cover', flexShrink: 0, background: '#F5F0EB' }} />
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <p style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', lineHeight: 1.3, marginBottom: 2, display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                        {lang === 'ar' ? item.nameAr : item.name}
-                      </p>
-                      <p style={{ fontSize: 15, fontWeight: 700, color: '#7A1E2B', marginBottom: 6 }}>
-                        {item.price.toFixed(3)} <span style={{ fontSize: 10, fontWeight: 500, color: '#8A7A70' }}>OMR</span>
-                      </p>
-                      {/* Stepper inline */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 0, background: '#FAF8F5', borderRadius: 10, border: '1px solid #EDE8E1', overflow: 'hidden', width: 'fit-content' }}>
-                        <button onClick={() => updateQty(item.id, Math.max(1, item.qty - 1), item.variant)} className="active:scale-90 transition-transform" style={{ width: 30, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'transparent', cursor: 'pointer' }}>
-                          <Minus size={12} variant="Outline" color="#3C3C43" />
-                        </button>
-                        <span style={{ width: 28, textAlign: 'center', fontSize: 13, fontWeight: 700, color: '#1A1A1A' }}>{item.qty}</span>
-                        <button onClick={() => updateQty(item.id, item.qty + 1, item.variant)} className="active:scale-90 transition-transform" style={{ width: 30, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'transparent', cursor: 'pointer' }}>
-                          <Add size={12} variant="Outline" color="#3C3C43" />
-                        </button>
+                    {/* Clickable image+info area → product detail */}
+                    <div
+                      onClick={() => navigate(`/product/${item.id}`)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => { if (e.key === 'Enter') navigate(`/product/${item.id}`); }}
+                      style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1, minWidth: 0, cursor: 'pointer' }}
+                      className="active:opacity-80 transition-opacity"
+                    >
+                      <img src={item.image} alt="" style={{ width: 72, height: 72, borderRadius: 12, objectFit: 'cover', flexShrink: 0, background: '#F5F0EB' }} />
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <p style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', lineHeight: 1.3, marginBottom: 2, display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                          {lang === 'ar' ? item.nameAr : item.name}
+                        </p>
+                        <p style={{ fontSize: 15, fontWeight: 700, color: '#7A1E2B', marginBottom: 6 }}>
+                          {item.price.toFixed(3)} <span style={{ fontSize: 10, fontWeight: 500, color: '#8A7A70' }}>OMR</span>
+                        </p>
+                        {/* Stepper inline — stop propagation so clicks don't navigate */}
+                        <div
+                          onClick={(e) => e.stopPropagation()}
+                          style={{ display: 'flex', alignItems: 'center', gap: 0, background: '#FAF8F5', borderRadius: 10, border: '1px solid #EDE8E1', overflow: 'hidden', width: 'fit-content' }}
+                        >
+                          <button onClick={(e) => { e.stopPropagation(); updateQty(item.id, Math.max(1, item.qty - 1), item.variant); }} className="active:scale-90 transition-transform" style={{ width: 30, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'transparent', cursor: 'pointer' }}>
+                            <Minus size={12} variant="Outline" color="#3C3C43" />
+                          </button>
+                          <span style={{ width: 28, textAlign: 'center', fontSize: 13, fontWeight: 700, color: '#1A1A1A' }}>{item.qty}</span>
+                          <button onClick={(e) => { e.stopPropagation(); updateQty(item.id, item.qty + 1, item.variant); }} className="active:scale-90 transition-transform" style={{ width: 30, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'transparent', cursor: 'pointer' }}>
+                            <Add size={12} variant="Outline" color="#3C3C43" />
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    {/* Delete */}
-                    <button onClick={() => removeFromCart(item.id, item.variant)} className="active:scale-90 transition-transform" style={{ width: 30, height: 30, borderRadius: 9, background: 'rgba(192,57,43,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: 'none', cursor: 'pointer', alignSelf: 'flex-start' }}>
+                    {/* Delete — isolated from clickable area */}
+                    <button onClick={(e) => { e.stopPropagation(); removeFromCart(item.id, item.variant); }} className="active:scale-90 transition-transform" style={{ width: 30, height: 30, borderRadius: 9, background: 'rgba(192,57,43,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: 'none', cursor: 'pointer', alignSelf: 'flex-start' }}>
                       <Trash size={14} variant="Outline" color="#C0392B" />
                     </button>
                   </motion.div>

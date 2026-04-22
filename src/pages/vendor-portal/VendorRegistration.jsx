@@ -43,7 +43,7 @@ export default function VendorRegistration() {
         <div style={{ width: 64, height: 64, borderRadius: 18, background: 'rgba(122,30,43,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
           <Shop size={28} variant="Bold" color={MAROON} />
         </div>
-        <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 24, fontWeight: 700, color: MAROON, marginBottom: 4 }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 700, color: MAROON, marginBottom: 4 }}>
           {isAr ? 'كن بائعاً' : 'Become a Vendor'}
         </h2>
         <p style={{ fontSize: 13, color: '#8A7A70' }}>

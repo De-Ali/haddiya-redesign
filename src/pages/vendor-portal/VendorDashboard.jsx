@@ -76,7 +76,7 @@ export default function VendorDashboard() {
 
       {/* ── Quick Actions ── */}
       <div style={{ padding: '0 20px' }}>
-        <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 18, fontWeight: 700, color: '#1A1A1A', marginBottom: 12 }}>
+        <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 700, color: '#1A1A1A', marginBottom: 12 }}>
           {isAr ? 'إجراءات سريعة' : 'Quick Actions'}
         </h3>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 24 }}>
@@ -101,7 +101,7 @@ export default function VendorDashboard() {
         </div>
 
         {/* ── Recent Orders ── */}
-        <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 18, fontWeight: 700, color: '#1A1A1A', marginBottom: 12 }}>
+        <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 700, color: '#1A1A1A', marginBottom: 12 }}>
           {isAr ? 'أحدث الطلبات' : 'Recent Orders'}
         </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>

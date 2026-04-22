@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Location, Card, DocumentText, TickCircle, Add, Sms, Call, User, Map } from 'iconsax-react';
+import { Location, Card, DocumentText, TickCircle, Add, Sms, Call, User, Map, Calendar, Clock } from 'iconsax-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useCart } from '../../context/CartContext';
 
@@ -25,11 +25,49 @@ const paymentMethods = [
 export default function CheckoutPage() {
   const navigate = useNavigate();
   const { t, lang } = useLanguage();
+  const isAr = lang === 'ar';
   const { cartItems, cartTotal, clearCart } = useCart();
   const [step, setStep] = useState(0);
   const [selectedAddress, setSelectedAddress] = useState(1);
   const [selectedPayment, setSelectedPayment] = useState('visa');
   const [showAddAddress, setShowAddAddress] = useState(false);
+
+  /* ── Delivery Scheduling (per client Meet3 review) ── */
+  const [selectedDateIdx, setSelectedDateIdx] = useState(0);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState('morning');
+
+  const deliveryDates = useMemo(() => {
+    const daysEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const daysAr = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+    const monthsEn = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const monthsAr = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+    const out = [];
+    for (let i = 0; i < 5; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() + i);
+      let label, labelAr;
+      if (i === 0) { label = 'Today'; labelAr = 'اليوم'; }
+      else if (i === 1) { label = 'Tomorrow'; labelAr = 'غداً'; }
+      else { label = daysEn[d.getDay()]; labelAr = daysAr[d.getDay()]; }
+      out.push({
+        label, labelAr,
+        day: d.getDate(),
+        month: monthsEn[d.getMonth()],
+        monthAr: monthsAr[d.getMonth()],
+        iso: d.toISOString().slice(0, 10),
+      });
+    }
+    return out;
+  }, []);
+
+  const timeSlots = [
+    { key: 'morning',   label: 'Morning',   labelAr: 'صباحاً', range: '9:00 AM – 12:00 PM', rangeAr: '٩:٠٠ ص – ١٢:٠٠ م', emoji: '☀️' },
+    { key: 'afternoon', label: 'Afternoon', labelAr: 'ظهراً',   range: '12:00 PM – 5:00 PM', rangeAr: '١٢:٠٠ م – ٥:٠٠ م', emoji: '🌤️' },
+    { key: 'evening',   label: 'Evening',   labelAr: 'مساءً',   range: '5:00 PM – 9:00 PM',  rangeAr: '٥:٠٠ م – ٩:٠٠ م',  emoji: '🌙' },
+  ];
+
+  const selectedDate = deliveryDates[selectedDateIdx];
+  const selectedSlot = timeSlots.find(s => s.key === selectedTimeSlot);
 
   const tax = cartTotal * 0.05;
   const total = cartTotal + tax;
@@ -112,6 +150,89 @@ export default function CheckoutPage() {
                 <Add size={16} variant="Outline" color="#7A1E2B" /> {t.checkout.addNew}
               </button>
             </div>
+
+            {/* ── Delivery Scheduling (per client request) ── */}
+            <div className="mb-5">
+              <div className="flex items-center gap-2 mb-3">
+                <Calendar size={18} variant="Bold" color="#7A1E2B" />
+                <h3 className="font-display text-[15px] font-semibold tracking-tight" style={{ color: '#1C1C1E' }}>
+                  {isAr ? 'موعد التوصيل' : 'Delivery Schedule'}
+                </h3>
+              </div>
+              <p className="text-[11px] mb-3" style={{ color: '#8E8E93' }}>
+                {isAr ? 'اختر التاريخ والوقت المناسب لاستلام هديتك' : 'Pick a convenient date & time for your gift'}
+              </p>
+
+              {/* Date chips */}
+              <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2 mb-3 -mx-1 px-1">
+                {deliveryDates.map((d, i) => {
+                  const active = selectedDateIdx === i;
+                  return (
+                    <button
+                      key={d.iso}
+                      onClick={() => setSelectedDateIdx(i)}
+                      className="flex-shrink-0 active:scale-95 transition-all"
+                      style={{
+                        minWidth: 68,
+                        padding: '10px 8px',
+                        borderRadius: 14,
+                        background: active ? '#7A1E2B' : '#FFFFFF',
+                        border: active ? '1.5px solid #7A1E2B' : '1px solid rgba(0,0,0,0.06)',
+                        boxShadow: active ? '0 4px 14px rgba(122,30,43,0.22)' : '0 1px 4px rgba(0,0,0,0.03)',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <div style={{ fontSize: 10, fontWeight: 600, color: active ? 'rgba(255,255,255,0.75)' : '#8E8E93', marginBottom: 3 }}>
+                        {isAr ? d.labelAr : d.label}
+                      </div>
+                      <div style={{ fontSize: 18, fontWeight: 700, color: active ? '#FFFFFF' : '#1C1C1E', lineHeight: 1 }}>
+                        {d.day}
+                      </div>
+                      <div style={{ fontSize: 10, fontWeight: 500, color: active ? 'rgba(255,255,255,0.75)' : '#AEAEB2', marginTop: 3 }}>
+                        {isAr ? d.monthAr : d.month}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Time slots */}
+              <div className="flex items-center gap-1.5 mb-2">
+                <Clock size={14} variant="Bold" color="#8E8E93" />
+                <span className="text-[11px] font-semibold" style={{ color: '#8E8E93' }}>
+                  {isAr ? 'الوقت المفضل' : 'Preferred time slot'}
+                </span>
+              </div>
+              <div className="grid grid-cols-3 gap-2">
+                {timeSlots.map((slot) => {
+                  const active = selectedTimeSlot === slot.key;
+                  return (
+                    <button
+                      key={slot.key}
+                      onClick={() => setSelectedTimeSlot(slot.key)}
+                      className="active:scale-95 transition-all"
+                      style={{
+                        padding: '10px 6px',
+                        borderRadius: 14,
+                        background: active ? 'rgba(122,30,43,0.06)' : '#FFFFFF',
+                        border: active ? '1.5px solid #7A1E2B' : '1px solid rgba(0,0,0,0.06)',
+                        boxShadow: active ? '0 0 0 3px rgba(122,30,43,0.06)' : '0 1px 4px rgba(0,0,0,0.03)',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <div style={{ fontSize: 18, marginBottom: 3 }}>{slot.emoji}</div>
+                      <div style={{ fontSize: 11, fontWeight: 700, color: active ? '#7A1E2B' : '#1C1C1E', lineHeight: 1.1 }}>
+                        {isAr ? slot.labelAr : slot.label}
+                      </div>
+                      <div style={{ fontSize: 9, fontWeight: 500, color: active ? '#7A1E2B' : '#AEAEB2', marginTop: 2, lineHeight: 1.2 }}>
+                        {isAr ? slot.rangeAr : slot.range}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <button
               onClick={() => setStep(1)}
               className="w-full h-[48px] rounded-2xl text-[14px] font-bold active:scale-[0.98] transition-transform"
@@ -259,6 +380,30 @@ export default function CheckoutPage() {
               </div>
               <p className="text-[12px] font-medium" style={{ color: '#1C1C1E' }}>
                 {lang === 'ar' ? savedAddresses[0].addressAr : savedAddresses[0].address}
+              </p>
+            </div>
+
+            {/* Delivery schedule summary */}
+            <div className="bg-white rounded-[18px] p-4 mb-3" style={{ border: '1px solid rgba(0,0,0,0.03)', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
+              <div className="flex items-center gap-2 mb-2">
+                <Calendar size={14} variant="Bold" color="#7A1E2B" />
+                <span className="text-[11px] font-semibold" style={{ color: '#7A1E2B' }}>{isAr ? 'موعد التوصيل' : 'Delivery Schedule'}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="text-[12px] font-semibold" style={{ color: '#1C1C1E' }}>
+                  {isAr
+                    ? `${selectedDate.labelAr} · ${selectedDate.day} ${selectedDate.monthAr}`
+                    : `${selectedDate.label} · ${selectedDate.month} ${selectedDate.day}`}
+                </p>
+                <div className="flex items-center gap-1">
+                  <span style={{ fontSize: 14 }}>{selectedSlot.emoji}</span>
+                  <span className="text-[11px] font-semibold" style={{ color: '#7A1E2B' }}>
+                    {isAr ? selectedSlot.labelAr : selectedSlot.label}
+                  </span>
+                </div>
+              </div>
+              <p className="text-[10px] mt-1" style={{ color: '#8E8E93' }}>
+                {isAr ? selectedSlot.rangeAr : selectedSlot.range}
               </p>
             </div>
 

@@ -26,7 +26,7 @@ export default function SignupPage() {
         className="flex flex-col items-center pt-12 pb-6"
       >
         <img src={`${import.meta.env.BASE_URL}haddiya-logo.png`} alt="Haddiya" className="w-[80px] h-[80px] object-contain" />
-        <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '24px', fontWeight: 600, color: '#7A1E2B', marginTop: '8px' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '24px', fontWeight: 600, color: '#7A1E2B', marginTop: '8px' }}>
           Haddiya
         </h1>
       </motion.div>
@@ -39,7 +39,7 @@ export default function SignupPage() {
         className="flex-1 px-6 pt-8 pb-10"
         style={{ background: '#FFFFFF', borderRadius: '28px 28px 0 0', boxShadow: '0 -4px 20px rgba(0,0,0,0.04)' }}
       >
-        <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '26px', fontWeight: 700, color: '#7A1E2B', marginBottom: '4px' }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 700, color: '#7A1E2B', marginBottom: '4px' }}>
           {isAr ? 'إنشاء حساب' : 'Create Account'}
         </h2>
         <p className="text-[13px] mb-6" style={{ color: '#8A7A70' }}>

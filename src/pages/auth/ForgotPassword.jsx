@@ -18,7 +18,7 @@ export default function ForgotPassword() {
         className="flex flex-col items-center pt-12 pb-6"
       >
         <img src={`${import.meta.env.BASE_URL}haddiya-logo.png`} alt="Haddiya" className="w-[80px] h-[80px] object-contain" />
-        <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '24px', fontWeight: 600, color: '#7A1E2B', marginTop: '8px' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '24px', fontWeight: 600, color: '#7A1E2B', marginTop: '8px' }}>
           Haddiya
         </h1>
       </motion.div>
@@ -41,7 +41,7 @@ export default function ForgotPassword() {
           </div>
         </div>
 
-        <h2 className="text-center" style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '26px', fontWeight: 700, color: '#7A1E2B', marginBottom: '6px' }}>
+        <h2 className="text-center" style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 700, color: '#7A1E2B', marginBottom: '6px' }}>
           {isAr ? 'إعادة تعيين كلمة المرور' : 'Reset Password'}
         </h2>
         <p className="text-center text-[13px] mb-8 max-w-[260px] mx-auto leading-relaxed" style={{ color: '#8A7A70' }}>

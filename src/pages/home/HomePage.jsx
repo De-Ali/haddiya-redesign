@@ -14,6 +14,7 @@ import LanguageDropdown from '../../components/ui/LanguageDropdown';
 import CategoryChip from '../../components/ui/CategoryChip';
 import ProductCard from '../../components/ui/ProductCard';
 import VendorCard from '../../components/ui/VendorCard';
+import PromoPopup from '../../components/ui/PromoPopup';
 
 /* ── Hero slides data ──────────────────────────────────────────────────────── */
 const heroSlides = [
@@ -120,6 +121,9 @@ export default function HomePage() {
 
   return (
     <div className="bg-mesh min-h-full pb-6">
+
+      {/* ══ Promotional Pop-up (per client: strategic deal highlight) ═════ */}
+      <PromoPopup />
 
       {/* ══ Header (sticky) ════════════════════════════════════════════════ */}
       <div
@@ -398,6 +402,48 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* ══ Gift for Everyone (Tab-based) — per client: show BEFORE "Every Moment" ═ */}
+      <div className="mb-6">
+        <SectionHeader
+          title={lang === 'ar' ? 'هدية للجميع' : 'Gifts for Everyone'}
+          isRTL={isRTL} isAr={isAr}
+        />
+        {/* Tab buttons */}
+        <div className="flex gap-2 px-5 mb-4 overflow-x-auto no-scrollbar">
+          {giftForTabs.map((tab) => {
+            const active = activeGiftTab === tab.key;
+            return (
+              <button
+                key={tab.key}
+                onClick={() => setActiveGiftTab(tab.key)}
+                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[12px] font-semibold flex-shrink-0 transition-all active:scale-95"
+                style={{
+                  background: active ? tab.color : 'white',
+                  color: active ? '#fff' : '#3C3C43',
+                  boxShadow: active ? `0 4px 12px ${tab.color}30` : '0 1px 4px rgba(0,0,0,0.04)',
+                  border: active ? 'none' : '1px solid rgba(0,0,0,0.05)',
+                }}
+              >
+                <tab.Icon
+                  size={14}
+                  variant={active ? 'Bold' : 'Outline'}
+                  color={active ? '#fff' : tab.color}
+                />
+                {lang === 'ar' ? tab.labelAr : tab.label}
+              </button>
+            );
+          })}
+        </div>
+        {/* Products */}
+        <div className="flex gap-3.5 px-5 overflow-x-auto no-scrollbar pb-2">
+          {featuredProducts.slice(0, 4).map((p, i) => (
+            <div key={p.id} className="min-w-[160px] max-w-[160px] flex-shrink-0">
+              <ProductCard product={p} index={i} />
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* ══ Gift for Every Moment ════════════════════════════════════════════ */}
       <div className="mb-6">
         <SectionHeader
@@ -442,48 +488,6 @@ export default function HomePage() {
         <div className="flex gap-4 px-5 overflow-x-auto no-scrollbar pb-1">
           {vendors.slice(0, 5).map((v, i) => (
             <VendorCard key={v.id} vendor={v} index={i} compact />
-          ))}
-        </div>
-      </div>
-
-      {/* ══ Gift for Everyone (Tab-based) ════════════════════════════════════ */}
-      <div className="mb-6">
-        <SectionHeader
-          title={lang === 'ar' ? 'هدية للجميع' : 'Gifts for Everyone'}
-          isRTL={isRTL} isAr={isAr}
-        />
-        {/* Tab buttons */}
-        <div className="flex gap-2 px-5 mb-4 overflow-x-auto no-scrollbar">
-          {giftForTabs.map((tab) => {
-            const active = activeGiftTab === tab.key;
-            return (
-              <button
-                key={tab.key}
-                onClick={() => setActiveGiftTab(tab.key)}
-                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[12px] font-semibold flex-shrink-0 transition-all active:scale-95"
-                style={{
-                  background: active ? tab.color : 'white',
-                  color: active ? '#fff' : '#3C3C43',
-                  boxShadow: active ? `0 4px 12px ${tab.color}30` : '0 1px 4px rgba(0,0,0,0.04)',
-                  border: active ? 'none' : '1px solid rgba(0,0,0,0.05)',
-                }}
-              >
-                <tab.Icon
-                  size={14}
-                  variant={active ? 'Bold' : 'Outline'}
-                  color={active ? '#fff' : tab.color}
-                />
-                {lang === 'ar' ? tab.labelAr : tab.label}
-              </button>
-            );
-          })}
-        </div>
-        {/* Products */}
-        <div className="flex gap-3.5 px-5 overflow-x-auto no-scrollbar pb-2">
-          {featuredProducts.slice(0, 4).map((p, i) => (
-            <div key={p.id} className="min-w-[160px] max-w-[160px] flex-shrink-0">
-              <ProductCard product={p} index={i} />
-            </div>
           ))}
         </div>
       </div>

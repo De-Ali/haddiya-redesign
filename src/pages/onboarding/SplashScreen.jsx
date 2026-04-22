@@ -29,7 +29,7 @@ export default function SplashScreen() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
         className="mt-4 text-center"
-        style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '42px', fontWeight: 600, color: '#7A1E2B', letterSpacing: '0.02em' }}
+        style={{ fontFamily: 'var(--font-display)', fontSize: '42px', fontWeight: 600, color: '#7A1E2B', letterSpacing: '0.02em' }}
       >
         Haddiya
       </motion.h1>
@@ -39,7 +39,7 @@ export default function SplashScreen() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.5 }}
-        style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '16px', fontWeight: 400, fontStyle: 'italic', color: '#D4AF37', marginTop: '4px' }}
+        style={{ fontFamily: 'var(--font-display)', fontSize: '16px', fontWeight: 400, fontStyle: 'italic', color: '#D4AF37', marginTop: '4px' }}
       >
         The Art of Gifting
       </motion.p>
