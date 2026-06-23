@@ -252,6 +252,13 @@ story.append(p(
     'AI-powered Gift Assistant (audience → occasion → budget recommendation flow), curated send-as-gift '
     'workflows (message cards, scheduled delivery, gift wrapping), and a comprehensive vendor self-service portal.'
 ))
+story.append(p(
+    'Technically, Haddiya is delivered as a cross-platform <b>Flutter</b> application (a single Dart codebase '
+    'for both iOS and Android) backed by a <b>Laravel (PHP)</b> service layer that integrates with the '
+    '<b>ZID</b> commerce platform as the storefront and order engine. The Laravel layer owns session and '
+    'cookie handling, the ZID WebView bridge, the cart and checkout flow, guest checkout, and API ownership '
+    'between the Flutter client and ZID.'
+))
 
 story.append(Paragraph('1.2 Business Objectives', style_h2))
 story.append(branded_table(
@@ -290,9 +297,10 @@ story.append(Paragraph('1.4 Major System Components', style_h2))
 story.append(branded_table(
     ['Layer', 'Components'],
     [
-        ['Consumer Channels', 'iOS App, Android App, Mobile Web (PWA), Desktop Web'],
-        ['API Gateway / BFF', 'Auth, rate-limiting, localization, routing'],
-        ['Core Commerce', 'Catalog, cart, pricing, orders, payments, shipping, wishlist, checkout'],
+        ['Client Apps', 'Flutter app — single Dart codebase for iOS + Android; Mobile Web; Desktop Web'],
+        ['Backend (Laravel)', 'PHP service layer: session/cookie handling, ZID API ownership, cart + checkout flow, guest flow'],
+        ['Commerce Platform (ZID)', 'Storefront, catalog, orders, payments — consumed via headless APIs + WebView'],
+        ['API Gateway / BFF', 'Auth, rate-limiting, localization, routing between Flutter client and services'],
         ['Vendor Portal', 'Onboarding, inventory, orders, earnings'],
         ['Admin CMS', 'Ops, catalog moderation, reports, vendor management'],
         ['Intelligence Layer', 'Gift AI Assistant, recommendations, search ranking, promotion engine'],
@@ -321,6 +329,28 @@ story.append(Spacer(1, 8))
 story.append(Paragraph('<b>Total cumulative duration (sequential):</b> ~52 weeks / 12–13 months.', style_body_left))
 story.append(Paragraph('Recommended parallelization: MVP → V1 overlap saves 6–8 weeks.', style_muted))
 story.append(Paragraph('End-to-end calendar with overlap: ~10–11 months to V2-ready state.', style_muted))
+
+story.append(Paragraph('2.1 Current Backend Build Plan (Flutter × Laravel × ZID)', style_h2))
+story.append(p(
+    'The frontend (UI/UX and Flutter app) is already designed and built. The table below reflects the '
+    'active backend execution plan: a Laravel service layer integrating the Flutter client with the ZID '
+    'storefront via session/cookie handling and a WebView bridge. Dates are the current sprint targets '
+    '(June–July 2026).'
+))
+story.append(branded_table(
+    ['Workstream', 'Target Window', 'Status', 'Scope / Deliverables'],
+    [
+        ['Architecture', 'Early Jun 2026', 'Done', 'Flutter → Laravel → ZID; cookie handling; WebView usage; checkout flow; guest flow; API ownership'],
+        ['Storefront Backend APIs', '7–10 Jun 2026', 'In progress', 'Cart APIs: GET /cart, POST /cart/item, PATCH /cart/item/{id}, DELETE /cart/item/{id}; auth/session helpers: logout, session forwarding, cookie parsing'],
+        ['Session & Cookie Flow', 'Jun 2026', 'Not started', 'ZID session bootstrap, cookie persistence across WebView ↔ Flutter, token forwarding'],
+        ['Cart + Checkout Integration', '11–15 Jun 2026', 'Not started', 'Bind Flutter cart to Laravel cart APIs; ZID checkout handoff'],
+        ['Purchase Success Flow', '16–21 Jun 2026', 'Not started', 'Order confirmation, success callbacks, post-purchase state sync'],
+        ['Tracking & Analytics', '21 Jun–1 Jul 2026', 'Not started', 'Analytics scripts, event tracking, conversion funnels'],
+        ['Test & QA', '4–5 Jul 2026', 'Not started', 'Cart + checkout + session regression across iOS + Android'],
+        ['Production Readiness', '6–11 Jul 2026', 'Not started', 'Deep linking, push notifications, error monitoring, loading states, analytics verification, app-store testing'],
+    ],
+    [3.4, 2.6, 2.0, 9.0],
+))
 story.append(PageBreak())
 
 # ─────── 3. TEAM ───────
@@ -335,8 +365,8 @@ story.append(branded_table(
         ['UX Researcher', '1', 'Part-time (50%)', 'Phases 1–2', 'Bilingual user testing'],
         ['UI/UX Designer', '2', 'Full-time', 'Phases 1–4', 'Lead + product designer'],
         ['Frontend Engineers (Web)', '2', 'Full-time', 'Phases 3–7', 'React/Next.js, RTL/i18n'],
-        ['Mobile Engineers', '2', 'Full-time', 'Phases 3–7', 'React Native / native'],
-        ['Backend Engineers', '3', 'Full-time', 'Phases 3–7', 'NestJS or Go'],
+        ['Mobile Engineers', '2', 'Full-time', 'Phases 3–7', 'Flutter (Dart)'],
+        ['Backend Engineers', '3', 'Full-time', 'Phases 3–7', 'Laravel (PHP), ZID integration'],
         ['AI/ML Engineer', '1', 'FT Ph5, PT after', 'Months 4–8', 'Gift Assistant, embeddings'],
         ['DevOps / Platform', '1', 'Full-time', 'Phases 3–7', 'IaC, CI/CD, observability'],
         ['QA Lead', '1', 'Full-time', 'Phases 4–7', 'Test strategy, automation'],
@@ -395,7 +425,7 @@ modules = [
     ['18', 'Document Management', 'Vendor KYC, invoices, gift card art, S3 signed URLs.', 'Medium', 'Auth', '5', '1 BE'],
     ['19', 'Loyalty & Points', 'Points ledger, earn/redeem rules, tiering.', 'Medium', 'Orders, Pay', '8', '1 BE, 1 FE'],
     ['20', 'Customer Support', 'Ticket flow, chat handoff, refund processing.', 'Medium', 'Orders', '6', '1 BE, 1 FE'],
-    ['21', 'Mobile Apps', 'RN-shared, deep-linking, biometrics, push, offline cart.', 'High', 'All consumer APIs', '24', '2 Mobile'],
+    ['21', 'Mobile App (Flutter)', 'Single Dart codebase iOS + Android, ZID WebView bridge, deep-linking, biometrics, push, offline cart.', 'High', 'All consumer APIs', '24', '2 Flutter'],
     ['22', 'Security & Compliance', 'OWASP, PCI, PDPL, WAF, rate-limit, secrets.', 'High', 'Cross-cutting', '10', '1 Sec, DevOps'],
     ['23', 'DevOps & Platform', 'IaC, CI/CD, environments, observability, on-call.', 'High', 'Cross-cutting', '14', '1 DevOps'],
 ]
@@ -435,7 +465,8 @@ phases = [
     ('Phase 4 — Frontend &amp; Mobile · Weeks 8–22', [
         'Component library on top of design system (Storybook).',
         'Web app (Next.js 14 App Router), PWA shell.',
-        'Mobile app (React Native with native modules).',
+        'Mobile app (Flutter — single Dart codebase; native modules for biometrics + payments).',
+        'ZID WebView bridge + session/cookie forwarding between Flutter client and Laravel.',
         'State management (TanStack Query + Zustand).',
         'i18n with full RTL support, OMR currency + Arabic dates.',
     ], 'Deliverables: Browsable web app + signed iOS/Android beta builds.'),
@@ -475,10 +506,12 @@ story.append(PageBreak())
 # ─────── 6. ARCHITECTURE ───────
 story.append(Paragraph('6. Technical Architecture Recommendations', style_h1))
 arch = [
-    ['Frontend (Web)', 'Next.js 14 (App Router) + TypeScript + Tailwind v4', 'SSR/ISR for SEO, mature i18n + RTL'],
-    ['Mobile', 'React Native (Expo bare), native modules for biometrics', 'Single team, ~80% code reuse'],
-    ['Backend', 'Node.js (NestJS, TS); Go for hot paths', 'Type-safe full stack, large hiring pool'],
-    ['API Gateway / BFF', 'AWS API Gateway + GraphQL BFF or REST + tRPC', 'Tailored payloads per channel'],
+    ['Mobile (Primary)', 'Flutter (Dart) — single codebase for iOS + Android', 'One team, native performance, fast iteration'],
+    ['Web', 'Next.js 14 (App Router) + TypeScript + Tailwind v4', 'SSR/ISR for SEO, mature i18n + RTL'],
+    ['Backend', 'Laravel (PHP 8.3) — REST APIs, queues, scheduler', 'Owns session/cookie, ZID integration, business logic'],
+    ['Commerce Platform', 'ZID — headless storefront + WebView', 'GCC-native catalog, orders, payments; compresses commerce build'],
+    ['Session / Cookie Bridge', 'Laravel session forwarding + cookie parsing', 'Seamless auth across ZID WebView ↔ Flutter client'],
+    ['API Gateway / BFF', 'AWS API Gateway + REST; GraphQL BFF optional', 'Tailored payloads per channel'],
     ['Database', 'PostgreSQL 16 on RDS (multi-AZ). pgvector for embeddings.', 'ACID for orders, JSON for attributes'],
     ['Caching', 'Redis (ElastiCache)', 'Sub-ms latency, sessions/cart/rate-limit'],
     ['Search', 'OpenSearch with Arabic + English ICU analyzers', 'Faceted, typo-tolerant, RTL'],
@@ -489,7 +522,7 @@ arch = [
     ['Identity', 'AWS Cognito or Auth0; WhatsApp Business OTP', 'Offload undifferentiated auth'],
     ['Payments', 'Thawani (OMR), Tap, Apple Pay, COD', 'Local rails first, expand later'],
     ['Observability', 'Datadog (APM + logs + RUM) or Grafana Cloud', 'Full-stack visibility'],
-    ['Error Tracking', 'Sentry (web + mobile + backend)', 'First-class RN + Next.js integration'],
+    ['Error Tracking', 'Sentry (Flutter + Laravel + web)', 'First-class Flutter + Laravel + Next.js integration'],
     ['Feature Flags', 'LaunchDarkly or Unleash (OSS)', 'Safe rollouts, vendor segment targeting'],
     ['Analytics', 'Segment → Snowflake/BigQuery → Looker / Metabase', 'Vendor dashboards, cohort analysis'],
     ['Secrets', 'AWS Secrets Manager + Parameter Store', 'Rotation, audit logging'],
@@ -534,7 +567,7 @@ story.append(branded_table(
     [
         ['Backend Engineers', '3', 'Full-time', '7 months'],
         ['Frontend Web Engineers', '2', 'Full-time', '7 months'],
-        ['Mobile Engineers (React Native)', '2', 'Full-time', '7 months'],
+        ['Mobile Engineers (Flutter)', '2', 'Full-time', '7 months'],
         ['AI / ML Engineer', '1', 'Full-time Ph5, part later', '5 months'],
         ['DevOps / Platform Engineer', '1', 'Full-time', '7 months'],
         ['QA Lead', '1', 'Full-time', '6 months'],
@@ -704,8 +737,8 @@ story.append(Paragraph('9.5 Fastest Realistic Approach (Without Quality Compromi
 story.extend(bullets([
     ('Freeze MVP scope hard. ', 'No additions without scope-swap. Feature flags so half-done work doesn&#8217;t block release.'),
     ('Parallelize Phase 2 (design) with Phase 3 (backend foundations). ', 'Saves 4–6 weeks of calendar time.'),
-    ('Adopt monolith-modular backend first ', '(NestJS modules), extract microservices only when scaling forces it.'),
-    ('Use React Native ', 'with high code reuse instead of dual native apps — saves ~3 months and 1.5 FTE.'),
+    ('Adopt a Laravel modular monolith first ', '(domain modules), extract services only when scaling forces it.'),
+    ('Use Flutter (single Dart codebase) ', 'instead of dual native apps — one team ships iOS + Android, saves ~3 months and 1.5 FTE.'),
     ('Buy, don&#8217;t build, undifferentiated components: ', 'Auth0/Cognito, OpenSearch managed, Sentry, Datadog.'),
     ('Continuous deployment from day one. ', 'Every PR deployable to staging; production deploys daily once V1 stabilizes.'),
     ('Vendor pilot cohort (10–15 vendors) on MVP ', 'while V1 features land — real-world feedback loop.'),
